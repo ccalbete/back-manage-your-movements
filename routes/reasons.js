@@ -1,25 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+const reasons = require('../data/reasons');
 
 router.get("/", (req, res) => {
     res.send({ success: true, reasons });
 });
-
-
-const reasons = [
-    {
-        userId: 1,
-        name: "Salary",
-    },
-    {
-        userId: 1,
-        name: "Gift",
-    },
-    {
-        userId: 2,
-        name: "Leftover last month",
-    }
-];
 
 module.exports = router;
