@@ -7,5 +7,4 @@ router.get("/", (req, res) => {
     res.send({ success: true, paymentModes });
 });
 
-
 module.exports = router;
