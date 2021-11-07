@@ -16,5 +16,5 @@ app.use("/users", userRoutes);
 app.use("/", privateRoutes);
 
 app.listen(process.env.PORT, () => {
-    console.log(`Servidor corriendo en puerto ${process.env.PORT}`);
+    console.log(`Server running, port: ${process.env.PORT}`);
 });
