@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const paymentModes = require('../data/paymentModes');
 const paymentModesLogic = require('./../src/paymentModes');
 
 router.get("/", (req, res) => {
+    const paymentModes = paymentModesLogic.getPaymentModes();
     res.send({ success: true, paymentModes });
 });
 

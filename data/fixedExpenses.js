@@ -1,37 +1,37 @@
 module.exports = [
     {
         userId: "1",
-        name: "Food",
+        name: "University",
         spent: 100
     },
     {
         userId: "1",
-        name: "Outings",
+        name: "Booking",
         spent: 500,
     },
     {
         userId: "1",
-        name: "Clothes",
-        spent: 200,
+        name: "Credit card",
+        spent: 1000,
     },
     {
         userId: "1",
-        name: "Transportation",
-        spent: 150,
+        name: "English course",
+        spent: 750,
     },
     {
         userId: "1",
-        name: "Cleaning",
-        spent: 50,
+        name: "Gym",
+        spent: 250,
     },
     {
         userId: "1",
-        name: "Pharmacy",
-        spent: 600,
+        name: "Internet",
+        spent: 800,
     },
     {
         userId: "2",
-        name: "Clothes",
+        name: "Cleaning",
         spent: 400
     }
 ];

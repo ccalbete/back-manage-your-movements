@@ -1,21 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
 
-const users = require('../data/users');
 const usersLogic = require('./../src/users');
 const generateToken = require("./../src/token");
 const verifyToken = require("../middleware/tokenValidation");
 
-//starts in 4 because in data/users there are 3 hardcoded users 
-let userId = 4;
-
-
-
 router.get("/", verifyToken, (req, res) => {
+    const users = usersLogic.getUsers();
     res.send({ success: true, users });
 });
 
+/*
+If username and password exists, the response is http 200 and an identificator token is created
+If username or password is incorrect, the api return "Wrong username or password" for more security 
+*/
 router.post("/login", async (req, res, next) => {
     try {
 
@@ -44,6 +42,10 @@ router.post("/login", async (req, res, next) => {
     }
 });
 
+/*
+    Username must be unique
+    When the user is created, an id is assigned to him and the password is encrypted
+*/
 router.post("/register", async (req, res, next) => {
     try {
         if (req.body.username && req.body.password) {
@@ -52,13 +54,7 @@ router.post("/register", async (req, res, next) => {
 
             const encryptedPassword = await usersLogic.encryptPassword(req.body.password);
 
-            users.push(
-                {
-                    userId: (userId++).toString(),
-                    username: req.body.username,
-                    password: encryptedPassword
-                }
-            );
+            usersLogic.createUser(req.body.username, encryptedPassword);
 
             return res.status(201).send();
 

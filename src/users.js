@@ -1,6 +1,13 @@
 const users = require('../data/users');
 const bcrypt = require("bcrypt");
 
+//starts in 4 because in data/users there are 3 hardcoded users 
+let userId = 4;
+
+function getUsers() {
+    return users;
+}
+
 function userExists(username) {
     const exists = users.find((user) => {
         return user.username === username;
@@ -19,6 +26,18 @@ async function isValidPassword(receivedPassword, userPassword) {
     return isValid;
 }
 
+function createUser(username, encryptedPassword) {
+    users.push(
+        {
+            userId: (userId++).toString(),
+            username,
+            password: encryptedPassword
+        }
+    );
+}
+
+module.exports.getUsers = getUsers;
 module.exports.userExists = userExists;
 module.exports.encryptPassword = encryptPassword;
 module.exports.isValidPassword = isValidPassword;
+module.exports.createUser = createUser;

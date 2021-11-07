@@ -1,9 +1,15 @@
 const categories = require('./../data/categories');
 
-function getFixedCategoriesByUser(userId) {
-    const userCategories = categories.filter(category => category.userId == userId);
-    const fixedCategories = userCategories.filter(category => category.isFixed);
-    return fixedCategories;
+
+function getCategories() {
+    return categories;
 }
 
-module.exports.getFixedCategoriesByUser = getFixedCategoriesByUser;
+
+function getCategoriesByUser(userId) {
+    const userCategories = categories.filter(category => category.userId == userId);
+    return userCategories;
+}
+
+module.exports.getCategories = getCategories;
+module.exports.getCategoriesByUser = getCategoriesByUser;

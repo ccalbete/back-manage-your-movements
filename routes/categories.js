@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
 
-const categories = require('../data/categories');
 const categoriesLogic = require('./../src/categories');
 
 router.get("/", (req, res) => {
+    const categories = categoriesLogic.getCategories();
     res.send({ success: true, categories });
 });
 
-router.get("/fixed/:userId", (req, res) => {
+router.get("/:userId", (req, res) => {
     const userId = req.params.userId;
-    const fixedCategories = categoriesLogic.getFixedCategoriesByUser(userId);
-    res.send({ success: true, fixedCategories });
+    const userCategories = categoriesLogic.getCategoriesByUser(userId);
+    res.send({ success: true, userCategories });
 });
 
 module.exports = router;

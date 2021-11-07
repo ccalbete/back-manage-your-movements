@@ -1,5 +1,9 @@
 const paymentModes = require('./../data/paymentModes');
 
+function getPaymentModes() {
+    return paymentModes;
+}
+
 function getDebitPaymentModesByUser(userId) {
     const userPaymentModes = getPaymentModesByUser(userId);
     const debitPaymentModes = userPaymentModes.filter(paymentMode => paymentMode.isDebit);
@@ -17,5 +21,6 @@ function getPaymentModesByUser(userId) {
     return paymentModes.filter(paymentMode => paymentMode.userId == userId);
 }
 
+module.exports.getPaymentModes = getPaymentModes;
 module.exports.getDebitPaymentModesByUser = getDebitPaymentModesByUser;
 module.exports.getCreditPaymentModesByUser = getCreditPaymentModesByUser;

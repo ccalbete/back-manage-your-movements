@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const reasons = require('../data/reasons');
 const reasonsLogic = require('./../src/reasons');
 
 router.get("/", (req, res) => {
+    const reasons = reasonsLogic.getReasons();
     res.send({ success: true, reasons });
 });
 
