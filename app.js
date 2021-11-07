@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 const userRoutes = require("./routes/users");
-const privateRoutes = require("./middleware/privateRoutes.js");
+const privateRoutes = require("./routes/privateRoutes.js");
 
 app.use(express.json());
 app.use(

@@ -2,12 +2,12 @@
 
 const express = require("express");
 const app = express();
-const verifyToken = require("./tokenValidation");
+const verifyToken = require("./../middleware/tokenValidation");
 
-const categoriesRoutes = require("../routes/categories");
-const paymentModesRoutes = require("../routes/paymentModes");
-const placesRoutes = require("../routes/places");
-const reasonsRoutes = require("../routes/reasons");
+const categoriesRoutes = require("./categories");
+const paymentModesRoutes = require("./paymentModes");
+const placesRoutes = require("./places");
+const reasonsRoutes = require("./reasons");
 
 
 app.use("/categories", verifyToken, categoriesRoutes);

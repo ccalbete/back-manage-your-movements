@@ -54,7 +54,7 @@ router.post("/register", async (req, res, next) => {
 
             users.push(
                 {
-                    userId: userId++,
+                    userId: (userId++).toString(),
                     username: req.body.username,
                     password: encryptedPassword
                 }
