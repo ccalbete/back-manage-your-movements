@@ -3,6 +3,17 @@ const router = express.Router();
 
 const transfersController = require("./../src/transfers");
 
+router.get("/", (req, res) => {
+    const transfers = transfersController.getTransfers();
+    res.send({ success: true, transfers });
+});
+
+router.get("/:userId", (req, res) => {
+    const userId = req.params.userId;
+    const userTransfers = transfersController.getTransfersByUser(userId);
+    res.send({ success: true, userTransfers });
+});
+
 router.post("/", (req, res) => {
     const userId = req.body.userId;
     const date = req.body.date;
