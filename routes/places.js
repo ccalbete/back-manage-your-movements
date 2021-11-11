@@ -1,16 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-const placesLogic = require('./../src/places');
+const placesController = require('./../src/places');
 
 router.get("/", (req, res) => {
-    const places = placesLogic.getPlaces();
+    const places = placesController.getPlaces();
     res.send({ success: true, places });
 });
 
 router.get("/:userId", (req, res) => {
     const userId = req.params.userId;
-    const userPlaces = placesLogic.getPlacesByUser(userId);
+    const userPlaces = placesController.getPlacesByUser(userId);
     res.send({ success: true, userPlaces });
 });
 
