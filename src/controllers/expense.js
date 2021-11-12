@@ -23,7 +23,7 @@ function saveExpense(userId, year, month, place, category, amount, paymentMode) 
             amount,
             paymentMode
         }
-    )
+    );
 
 }
 

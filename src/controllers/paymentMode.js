@@ -20,7 +20,7 @@ function getCreditPaymentModesByUser(userId) {
 function getPaymentModesByUser(userId) {
     return paymentModes.filter(paymentMode => paymentMode.userId == userId);
 }
-
+//filter substract and add by user id
 function subtractToAvailable(paymentModeToUpdate, amount) {
     paymentModes.find(paymentMode => paymentMode.name === paymentModeToUpdate).available -= amount;
 }
