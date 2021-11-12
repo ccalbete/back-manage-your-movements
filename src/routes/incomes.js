@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 
 router.get("/:userId", (req, res) => {
     const userId = req.params.userId;
-    const userIncomes = incomeController.getIncomes(userId);
+    const userIncomes = incomeController.getIncomesByUser(userId);
     res.send({ success: true, userIncomes });
 });
 

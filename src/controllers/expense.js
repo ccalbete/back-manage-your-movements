@@ -13,8 +13,8 @@ function getExpensesByUser(userId) {
 };
 
 function saveExpense(userId, year, month, place, category, amount, paymentMode) {
-    categoryController.addToSpent(category, amount);
-    paymentModeController.subtractToAvailable(paymentMode, amount);
+    categoryController.addToSpent(userId, category, amount);
+    paymentModeController.subtractToAvailable(userId, paymentMode, amount);
 
     expenses.push(
         {

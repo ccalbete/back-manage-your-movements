@@ -11,8 +11,8 @@ function getTransfersByUser(userId) {
 }
 
 function saveTransfer(userId, date, origin, amount, destination) {
-    paymentModeController.subtractToAvailable(origin, amount);
-    paymentModeController.AddToAvailable(destination, amount);
+    paymentModeController.subtractToAvailable(userId, origin, amount);
+    paymentModeController.AddToAvailable(userId, destination, amount);
 
     transfers.push(
         {
