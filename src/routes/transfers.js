@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const transfersController = require("./../src/transfers");
+const transfersController = require('../controllers/transfer');
 
 router.get("/", (req, res) => {
     const transfers = transfersController.getTransfers();

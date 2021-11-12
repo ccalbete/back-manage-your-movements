@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const placesController = require('./../src/places');
+const placesController = require('../controllers/place');
 
 router.get("/", (req, res) => {
     const places = placesController.getPlaces();

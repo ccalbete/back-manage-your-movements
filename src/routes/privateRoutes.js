@@ -2,7 +2,7 @@
 
 const express = require("express");
 const app = express();
-const verifyToken = require("./../middleware/tokenValidation");
+const verifyToken = require('../middleware/tokenValidation');
 
 const categoriesRoutes = require("./categories");
 const fixedExpensesRoutes = require("./fixedExpenses");

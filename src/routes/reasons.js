@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const reasonsController = require('./../src/reasons');
+const reasonsController = require('../controllers/reason');
 
 router.get("/", (req, res) => {
     const reasons = reasonsController.getReasons();

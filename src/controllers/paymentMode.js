@@ -1,4 +1,4 @@
-const paymentModes = require('./../data/paymentModes');
+const paymentModes = require('../../data/paymentModes');
 
 function getPaymentModes() {
     return paymentModes;

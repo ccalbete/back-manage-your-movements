@@ -1,4 +1,4 @@
-const fixedExpenses = require('./../data/fixedExpenses');
+const fixedExpenses = require('../../data/fixedExpenses');
 
 function getFixedExpenses() {
     return fixedExpenses;

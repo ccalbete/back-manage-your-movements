@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const expensesController = require("./../src/expenses");
+const expensesController = require("../controllers/expense");
 
 router.get("/", (req, res) => {
     const expenses = expensesController.getExpenses();
