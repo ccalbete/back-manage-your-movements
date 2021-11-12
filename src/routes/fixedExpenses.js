@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const fixedExpensesController = require('./../src/fixedExpenses');
+const fixedExpensesController = require('../controllers/fixedExpense');
 
 router.get("/", (req, res) => {
     fixedExpenses = fixedExpensesController.getFixedExpenses();

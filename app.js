@@ -2,8 +2,8 @@ require('dotenv').config();
 const express = require("express");
 const app = express();
 
-const userRoutes = require("./routes/users");
-const privateRoutes = require("./routes/privateRoutes.js");
+const userRoutes = require('./src/routes/users');
+const privateRoutes = require("./src/routes/privateRoutes.js");
 
 app.use(express.json());
 app.use(

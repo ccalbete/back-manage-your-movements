@@ -1,5 +1,5 @@
-const paymentModesController = require("./../src/paymentModes");
-const transfers = require("./../data/transfers");
+const paymentModesController = require("./paymentMode");
+const transfers = require("../../data/transfers");
 
 function getTransfers() {
     return transfers;

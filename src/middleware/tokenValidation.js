@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const secretToken = require("../data/sign");
+const secretToken = require('./../../data/sign');
 
 const verifyToken = (req, res, next) => {
     try {

@@ -1,4 +1,4 @@
-const reasons = require('./../data/reasons');
+const reasons = require('../../data/reasons');
 
 function getReasons() {
     return reasons;

@@ -1,4 +1,4 @@
-const places = require('./../data/places');
+const places = require('../../data/places');
 
 function getPlaces() {
     return places;

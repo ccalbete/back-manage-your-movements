@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const paymentModesController = require('./../src/paymentModes');
+const paymentModesController = require('../controllers/paymentMode');
 
 router.get("/", (req, res) => {
     const paymentModes = paymentModesController.getPaymentModes();

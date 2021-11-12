@@ -1,5 +1,5 @@
-const categoriesController = require("./categories");
-const expenses = require("./../data/expenses");
+const categoriesController = require("./category");
+const expenses = require("../../data/expenses");
 
 function getExpenses() {
     return expenses;
