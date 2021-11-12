@@ -1,22 +1,22 @@
 const express = require("express");
 const router = express.Router();
 
-const paymentModesController = require('../controllers/paymentMode');
+const paymentModeController = require('../controllers/paymentMode');
 
 router.get("/", (req, res) => {
-    const paymentModes = paymentModesController.getPaymentModes();
+    const paymentModes = paymentModeController.getPaymentModes();
     res.send({ success: true, paymentModes });
 });
 
 router.get("/debit/:userId", (req, res) => {
     const userId = req.params.userId;
-    const debitPaymentModes = paymentModesController.getDebitPaymentModesByUser(userId);
+    const debitPaymentModes = paymentModeController.getDebitPaymentModesByUser(userId);
     res.send({ success: true, debitPaymentModes });
 });
 
 router.get("/credit/:userId", (req, res) => {
     const userId = req.params.userId;
-    const creditPaymentModes = paymentModesController.getCreditPaymentModesByUser(userId);
+    const creditPaymentModes = paymentModeController.getCreditPaymentModesByUser(userId);
     res.send({ success: true, creditPaymentModes });
 });
 

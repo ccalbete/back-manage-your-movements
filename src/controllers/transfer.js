@@ -1,4 +1,4 @@
-const paymentModesController = require("./paymentMode");
+const paymentModeController = require("./paymentMode");
 const transfers = require("../../data/transfers");
 
 function getTransfers() {
@@ -11,8 +11,8 @@ function getTransfersByUser(userId) {
 }
 
 function saveTransfer(userId, date, origin, amount, destination) {
-    paymentModesController.subtractToAvailable(origin, amount);
-    paymentModesController.AddToAvailable(destination, amount);
+    paymentModeController.subtractToAvailable(origin, amount);
+    paymentModeController.AddToAvailable(destination, amount);
 
     transfers.push(
         {

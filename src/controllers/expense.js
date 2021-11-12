@@ -1,4 +1,4 @@
-const categoriesController = require("./category");
+const categoryController = require("./category");
 const expenses = require("../../data/expenses");
 
 function getExpenses() {
@@ -11,7 +11,7 @@ function getExpensesByUser(userId) {
 };
 
 function saveExpense(userId, year, month, place, category, amount, paymentMode) {
-    categoriesController.addToSpent(category, amount);
+    categoryController.addToSpent(category, amount);
     //restar al disponible del paymentMode
     expenses.push(
         {
