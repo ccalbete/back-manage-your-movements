@@ -1,4 +1,5 @@
 const incomes = require("../../data/incomes");
+const paymentModeController = require("./paymentMode");
 
 function getIncomes() {
     return incomes;
@@ -9,5 +10,21 @@ function getIncomesByUser(userId) {
     return userIncomes;
 }
 
+function saveIncome(userId, year, month, reason, amount, paymentMode) {
+    paymentModeController.AddToAvailable(paymentMode, amount);
+
+    incomes.push(
+        {
+            userId,
+            year,
+            month,
+            reason,
+            amount,
+            paymentMode
+        }
+    );
+}
+
 module.exports.getIncomes = getIncomes;
 module.exports.getIncomesByUser = getIncomesByUser;
+module.exports.saveIncome = saveIncome;
