@@ -1,16 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-const fixedExpensesLogic = require('./../src/fixedExpenses');
+const fixedExpensesController = require('./../src/fixedExpenses');
 
 router.get("/", (req, res) => {
-    fixedExpenses = fixedExpensesLogic.getFixedExpenses();
+    fixedExpenses = fixedExpensesController.getFixedExpenses();
     res.send({ success: true, fixedExpenses });
 });
 
 router.get("/:userId", (req, res) => {
     const userId = req.params.userId;
-    const userFixedExpenses = fixedExpensesLogic.getFixedExpensesByUser(userId);
+    const userFixedExpenses = fixedExpensesController.getFixedExpensesByUser(userId);
     res.send({ success: true, userFixedExpenses });
 });
 
