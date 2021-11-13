@@ -16,18 +16,18 @@ router.get("/:userId", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-    const userId = req.body.userId;
+    const userId = req.user.userId;
     const year = req.body.year;
     const month = req.body.month;
     const reason = req.body.reason;
     const amount = req.body.amount;
     const paymentMode = req.body.paymentMode;
 
-    if (userId && amount && paymentMode) {
+    if (amount && paymentMode) {
         incomeController.saveIncome(userId, year, month, reason, amount, paymentMode);
         res.send({ success: true });
     } else {
-        return res.status(400).json({ success: false, message: "Required data is missing (userId, amount, paymentMode)" });
+        return res.status(400).json({ success: false, message: "Required data is missing (amount, paymentMode)" });
     }
 
 });

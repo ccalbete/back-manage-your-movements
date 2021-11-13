@@ -2,9 +2,10 @@
 const jwt = require("jsonwebtoken");
 const secretToken = require('../../data/sign');
 
-function generateToken(username, password) {
+function generateToken(userId, username, password) {
     return jwt.sign(
         {
+            userId,
             username,
             password,
         },

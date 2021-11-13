@@ -14,7 +14,7 @@ router.get("/:userId", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-    const userId = req.body.userId;
+    const userId = req.user.userId;
     const year = req.body.year;
     const month = req.body.month;
     const place = req.body.place;
@@ -22,11 +22,11 @@ router.post("/", (req, res) => {
     const amount = req.body.amount;
     const paymentMode = req.body.paymentMode;
 
-    if (userId && category && amount && paymentMode) {
+    if (category && amount && paymentMode) {
         expenseController.saveExpense(userId, year, month, place, category, amount, paymentMode);
         res.send({ success: true });
     } else {
-        return res.status(400).json({ success: false, message: "Required data is missing (userId, category, amount, paymentMode)" });
+        return res.status(400).json({ success: false, message: "Required data is missing (category, amount, paymentMode)" });
     }
 });
 
