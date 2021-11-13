@@ -15,17 +15,17 @@ router.get("/:userId", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-    const userId = req.body.userId;
+    const userId = req.user.userId;
     const date = req.body.date;
     const origin = req.body.origin;
     const amount = req.body.amount;
     const destination = req.body.destination;
 
-    if (userId && date && origin && amount && destination) {
+    if (date && origin && amount && destination) {
         transferController.saveTransfer(userId, date, origin, amount, destination);
         res.send({ success: true });
     } else {
-        return res.status(400).json({ success: false, message: "Required data is missing (userId, date, origin, amount, destination)" });
+        return res.status(400).json({ success: false, message: "Required data is missing (date, origin, amount, destination)" });
     }
 
 });
