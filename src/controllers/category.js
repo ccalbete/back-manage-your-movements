@@ -10,8 +10,9 @@ function getCategoriesByUser(userId) {
     return userCategories;
 }
 
-function addToSpent(categoryToUpdate, amount) {
-    const selectedCategory = categories.find(category => category.name === categoryToUpdate);
+function addToSpent(userId, categoryToUpdate, amount) {
+    const userCategories = getCategoriesByUser(userId);
+    const selectedCategory = userCategories.find(category => category.name === categoryToUpdate);
     selectedCategory.spent += amount;
 }
 
