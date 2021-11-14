@@ -23,13 +23,14 @@ function getPaymentModesByUser(userId) {
 }
 
 function subtractToAvailable(userId, paymentModeToUpdate, amount) {
-    const userPaymentModes = getPaymentModesNamesByUser(userId);
+    const userPaymentModes = getPaymentModesByUser(userId);
     userPaymentModes.find(paymentMode => paymentMode.name === paymentModeToUpdate).available -= amount;
 }
 
 function AddToAvailable(userId, paymentModeToUpdate, amount) {
-    const userPaymentModes = getPaymentModesNamesByUser(userId);
-    userPaymentModes.find(paymentMode => paymentMode.name === paymentModeToUpdate).available += amount;
+    const userPaymentModes = getPaymentModesByUser(userId);
+    const paymentMode = userPaymentModes.find(paymentMode => paymentMode.name === paymentModeToUpdate);
+    paymentMode.available += amount;
 }
 
 module.exports.getPaymentModes = getPaymentModes;

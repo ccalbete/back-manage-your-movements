@@ -8,22 +8,24 @@ router.get("/", (req, res) => {
     res.send({ success: true, paymentModes });
 });
 
-router.get("/debit/:userId", (req, res) => {
-    const userId = req.params.userId;
-    const debitPaymentModes = paymentModeController.getDebitPaymentModesByUser(userId);
-    res.send({ success: true, userId, debitPaymentModes });
-});
-
-router.get("/credit/:userId", (req, res) => {
-    const userId = req.params.userId;
-    const creditPaymentModes = paymentModeController.getCreditPaymentModesByUser(userId);
-    res.send({ success: true, creditPaymentModes });
-});
 
 router.get("/:userId", (req, res) => {
     const userId = req.params.userId;
     const userPaymentModes = paymentModeController.getPaymentModesByUser(userId);
     res.send({ success: true, userPaymentModes });
 });
+
+router.get("/:userId/debit", (req, res) => {
+    const userId = req.params.userId;
+    const debitPaymentModes = paymentModeController.getDebitPaymentModesByUser(userId);
+    res.send({ success: true, userId, debitPaymentModes });
+});
+
+router.get("/:userId/credit", (req, res) => {
+    const userId = req.params.userId;
+    const creditPaymentModes = paymentModeController.getCreditPaymentModesByUser(userId);
+    res.send({ success: true, creditPaymentModes });
+});
+
 
 module.exports = router;

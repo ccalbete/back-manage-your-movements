@@ -10,15 +10,14 @@ function getIncomesByUser(userId) {
     return userIncomes;
 }
 
-function saveIncome(userId, year, month, reason, amount, paymentMode) {
+function saveIncome(userId, date, reason, amount, paymentMode) {
     // Find selected user payment mode and add entered amount 
     paymentModeController.AddToAvailable(userId, paymentMode, amount);
 
     incomes.push(
         {
             userId,
-            year,
-            month,
+            date,
             reason,
             amount,
             paymentMode

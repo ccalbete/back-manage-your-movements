@@ -12,15 +12,14 @@ function getExpensesByUser(userId) {
     return userExpenses;
 };
 
-function saveExpense(userId, year, month, place, category, amount, paymentMode) {
+function saveExpense(userId, date, place, category, amount, paymentMode) {
     categoryController.addToSpent(userId, category, amount);
     paymentModeController.subtractToAvailable(userId, paymentMode, amount);
 
     expenses.push(
         {
             userId,
-            year,
-            month,
+            date,
             place,
             category,
             amount,
