@@ -22,7 +22,7 @@ router.get("/credit/:userId", (req, res) => {
 
 router.get("/:userId", (req, res) => {
     const userId = req.params.userId;
-    const userPaymentModes = getPaymentModesByUser(userId);
+    const userPaymentModes = paymentModeController.getPaymentModesByUser(userId);
     res.send({ success: true, userPaymentModes });
 });
 
