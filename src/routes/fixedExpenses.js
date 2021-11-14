@@ -14,4 +14,10 @@ router.get("/:userId", (req, res) => {
     res.send({ success: true, userFixedExpenses });
 });
 
+router.get("/:userId/names", (req, res) => {
+    const userId = req.params.userId;
+    const userFixedExpensesNames = fixedExpenseController.getFixedExpensesNamesByUser(userId);
+    res.send({ success: true, userFixedExpenses: userFixedExpensesNames });
+});
+
 module.exports = router;

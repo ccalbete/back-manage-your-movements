@@ -5,7 +5,7 @@ function getPlaces() {
 }
 
 function getPlacesByUser(userId) {
-    const userPlaces = places.filter(place => place.userId == userId).map(place => place.name);
+    const userPlaces = places.filter(place => place.userId == userId);
     return userPlaces;
 }
 

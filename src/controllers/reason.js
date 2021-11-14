@@ -5,7 +5,7 @@ function getReasons() {
 }
 
 function getReasonsByUser(userId) {
-    const userReasons = reasons.filter(reason => reason.userId == userId).map(reason => reason.name);;
+    const userReasons = reasons.filter(reason => reason.userId == userId);
     return userReasons;
 }
 

@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 router.get("/:userId", (req, res) => {
     const userId = req.params.userId;
     const userPlaces = placeController.getPlacesByUser(userId);
-    res.send({ success: true, userPlaces });
+    res.send({ success: true, userPlaces: userPlaces });
 });
 
 module.exports = router;

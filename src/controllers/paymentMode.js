@@ -4,10 +4,10 @@ function getPaymentModes() {
     return paymentModes;
 }
 
-function getDebitPaymentModesNamesByUser(userId) {
+function getDebitPaymentModesByUser(userId) {
     const userPaymentModes = getPaymentModesByUser(userId);
-    const debitPaymentModesNames = userPaymentModes.filter(paymentMode => paymentMode.isDebit).map(paymentMode => paymentMode.name);
-    return debitPaymentModesNames;
+    const debitPaymentModes = userPaymentModes.filter(paymentMode => paymentMode.isDebit);
+    return debitPaymentModes;
 }
 
 
@@ -15,10 +15,6 @@ function getCreditPaymentModesByUser(userId) {
     const userPaymentModes = getPaymentModesByUser(userId);
     const creditPaymentModes = userPaymentModes.filter(paymentMode => !paymentMode.isDebit);
     return creditPaymentModes;
-}
-
-function getPaymentModesNamesByUser(userId) {
-    return paymentModes.filter(paymentMode => paymentMode.userId == userId).map(paymentMode => paymentMode.name);
 }
 
 
@@ -37,9 +33,8 @@ function AddToAvailable(userId, paymentModeToUpdate, amount) {
 }
 
 module.exports.getPaymentModes = getPaymentModes;
-module.exports.getDebitPaymentModesNamesByUser = getDebitPaymentModesNamesByUser;
+module.exports.getDebitPaymentModesByUser = getDebitPaymentModesByUser;
 module.exports.getCreditPaymentModesByUser = getCreditPaymentModesByUser;
 module.exports.subtractToAvailable = subtractToAvailable;
 module.exports.AddToAvailable = AddToAvailable;
-module.exports.getPaymentModesNamesByUser = getPaymentModesNamesByUser;
 module.exports.getPaymentModesByUser = getPaymentModesByUser;
