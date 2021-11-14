@@ -1,13 +1,11 @@
 module.exports = [
     {
         userId: "1",
-        name: "University",
-        spent: 100
+        name: "University"
     },
     {
         userId: "1",
-        name: "Booking",
-        spent: 500,
+        name: "Booking"
     },
     {
         userId: "1",
