@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 router.get("/debit/:userId", (req, res) => {
     const userId = req.params.userId;
     const debitPaymentModes = paymentModeController.getDebitPaymentModesByUser(userId);
-    res.send({ success: true, debitPaymentModes });
+    res.send({ success: true, userId, debitPaymentModes });
 });
 
 router.get("/credit/:userId", (req, res) => {

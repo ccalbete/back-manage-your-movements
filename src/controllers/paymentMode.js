@@ -6,7 +6,7 @@ function getPaymentModes() {
 
 function getDebitPaymentModesByUser(userId) {
     const userPaymentModes = getPaymentModesByUser(userId);
-    const debitPaymentModes = userPaymentModes.filter(paymentMode => paymentMode.isDebit);
+    const debitPaymentModes = userPaymentModes.filter(paymentMode => paymentMode.isDebit).map(paymentMode => paymentMode.name);
     return debitPaymentModes;
 }
 

@@ -27,7 +27,7 @@ router.post("/login", async (req, res, next) => {
                 if (validPassword) {
                     const generatedToken = generateToken(user.userId, user.username, user.password);
 
-                    return res.status(200).json({ success: true, username: req.body.username, token: generatedToken });
+                    return res.status(200).json({ success: true, userId: user.userId, token: generatedToken });
                 } else {
                     return res.status(400).json({ success: false, message: "Wrong username or password" });
                 }
