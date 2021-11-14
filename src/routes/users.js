@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const usersLogic = require('./../src/users');
-const generateToken = require("./../src/token");
-const verifyToken = require("../middleware/tokenValidation");
+const userController = require('../controllers/user');
+const generateToken = require('../controllers/token');
+const verifyToken = require('../middleware/tokenValidation');
 
 router.get("/", verifyToken, (req, res) => {
-    const users = usersLogic.getUsers();
+    const users = userController.getUsers();
     res.send({ success: true, users });
 });
 
@@ -19,15 +19,15 @@ router.post("/login", async (req, res, next) => {
 
         if (req.body.username && req.body.password) {
 
-            const user = usersLogic.userExists(req.body.username)
+            const user = userController.userExists(req.body.username)
 
             if (user) {
-                const validPassword = await usersLogic.isValidPassword(req.body.password, user.password);
+                const validPassword = await userController.isValidPassword(req.body.password, user.password);
 
                 if (validPassword) {
-                    const generatedToken = generateToken(user.username, user.password);
+                    const generatedToken = generateToken(user.userId, user.username, user.password);
 
-                    return res.status(200).json({ success: true, username: req.body.username, token: generatedToken });
+                    return res.status(200).json({ success: true, userId: user.userId, token: generatedToken });
                 } else {
                     return res.status(400).json({ success: false, message: "Wrong username or password" });
                 }
@@ -50,11 +50,11 @@ router.post("/register", async (req, res, next) => {
     try {
         if (req.body.username && req.body.password) {
 
-            if (usersLogic.userExists(req.body.username)) return res.status(400).json({ success: false, message: "Username already registered" });
+            if (userController.userExists(req.body.username)) return res.status(400).json({ success: false, message: "Username already registered" });
 
-            const encryptedPassword = await usersLogic.encryptPassword(req.body.password);
+            const encryptedPassword = await userController.encryptPassword(req.body.password);
 
-            usersLogic.createUser(req.body.username, encryptedPassword);
+            userController.createUser(req.body.username, encryptedPassword);
 
             return res.status(201).send();
 

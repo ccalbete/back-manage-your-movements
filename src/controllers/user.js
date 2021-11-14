@@ -1,4 +1,4 @@
-const users = require('../data/users');
+const users = require('../../data/users');
 const bcrypt = require("bcrypt");
 
 //starts in 4 because in data/users there are 3 hardcoded users 

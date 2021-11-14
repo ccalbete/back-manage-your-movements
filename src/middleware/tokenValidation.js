@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const secretToken = require("../data/sign");
+const secretToken = require('./../../data/sign');
 
 const verifyToken = (req, res, next) => {
     try {
@@ -7,9 +7,9 @@ const verifyToken = (req, res, next) => {
 
         if (!token) return res.status(403).json({ error: "Access denied" });
 
-        const verified = jwt.verify(token, secretToken);
+        const verifiedToken = jwt.verify(token, secretToken);
 
-        req.user = verified;
+        req.user = verifiedToken;
         next();
     } catch (error) {
         return next(error);
