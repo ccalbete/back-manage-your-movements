@@ -18,7 +18,7 @@ function getCreditPaymentModesByUser(userId) {
 }
 
 function getPaymentModesByUser(userId) {
-    return paymentModes.filter(paymentMode => paymentMode.userId == userId);
+    return paymentModes.filter(paymentMode => paymentMode.userId == userId).map(paymentMode => paymentMode.name);
 }
 
 function subtractToAvailable(userId, paymentModeToUpdate, amount) {
