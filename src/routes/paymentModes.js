@@ -20,4 +20,10 @@ router.get("/credit/:userId", (req, res) => {
     res.send({ success: true, creditPaymentModes });
 });
 
+router.get("/:userId", (req, res) => {
+    const userId = req.params.userId;
+    const userPaymentModes = getPaymentModesByUser(userId);
+    res.send({ success: true, userPaymentModes });
+});
+
 module.exports = router;

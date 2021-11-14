@@ -36,3 +36,4 @@ module.exports.getDebitPaymentModesByUser = getDebitPaymentModesByUser;
 module.exports.getCreditPaymentModesByUser = getCreditPaymentModesByUser;
 module.exports.subtractToAvailable = subtractToAvailable;
 module.exports.AddToAvailable = AddToAvailable;
+module.exports.getPaymentModesByUser = getPaymentModesByUser;
