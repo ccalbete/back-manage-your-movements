@@ -14,4 +14,10 @@ router.get("/:userId", (req, res) => {
     res.send({ success: true, userCategories });
 });
 
+router.get("/:userId/names", (req, res) => {
+    const userId = req.params.userId;
+    const userCategoriesNames = categoryController.getCategoriesNamesByUser(userId);
+    res.send({ success: true, userCategoriesNames });
+});
+
 module.exports = router;

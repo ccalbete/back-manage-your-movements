@@ -8,10 +8,10 @@ router.get("/", (req, res) => {
     res.send({ success: true, paymentModes });
 });
 
-router.get("/debit/:userId", (req, res) => {
+router.get("/debit/:userId/names", (req, res) => {
     const userId = req.params.userId;
-    const debitPaymentModes = paymentModeController.getDebitPaymentModesByUser(userId);
-    res.send({ success: true, userId, debitPaymentModes });
+    const debitPaymentModesNames = paymentModeController.getDebitPaymentModesNamesByUser(userId);
+    res.send({ success: true, userId, debitPaymentModesNames });
 });
 
 router.get("/credit/:userId", (req, res) => {
@@ -20,10 +20,10 @@ router.get("/credit/:userId", (req, res) => {
     res.send({ success: true, creditPaymentModes });
 });
 
-router.get("/:userId", (req, res) => {
+router.get("/:userId/names", (req, res) => {
     const userId = req.params.userId;
-    const userPaymentModes = paymentModeController.getPaymentModesByUser(userId);
-    res.send({ success: true, userPaymentModes });
+    const userPaymentModesNames = paymentModeController.getPaymentModesNamesByUser(userId);
+    res.send({ success: true, userPaymentModesNames });
 });
 
 module.exports = router;
