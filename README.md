@@ -1,6 +1,6 @@
 # back-manage-your-movements
 
-This project made in node.js with express handles apis for a personal expenses tracking system.
+This project made in Node.js with Express handles apis for a personal expenses tracking system.
 ## Installation
 
 Before installing, [download and install Node.js](https://nodejs.org/en/download/).
