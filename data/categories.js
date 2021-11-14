@@ -76,5 +76,11 @@ module.exports = [
         name: "Clothes",
         isFixedExpense: false,
         spent: 400
+    },
+    {
+        userId: "2",
+        name: "Booking",
+        isFixedExpense: true,
+        spent: 350
     }
 ];

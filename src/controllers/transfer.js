@@ -12,7 +12,7 @@ function getTransfersByUser(userId) {
 
 function saveTransfer(userId, date, origin, amount, destination) {
     paymentModeController.subtractToAvailable(userId, origin, amount);
-    paymentModeController.AddToAvailable(userId, destination, amount);
+    paymentModeController.addToAvailable(userId, destination, amount);
 
     transfers.push(
         {
