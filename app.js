@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 const userRoutes = require('./src/routes/users');
 const privateRoutes = require("./src/routes/privateRoutes.js");
@@ -11,6 +12,8 @@ app.use(
         extended: true,
     })
 );
+
+app.use(cors());
 
 app.use("/users", userRoutes);
 app.use("/", privateRoutes);

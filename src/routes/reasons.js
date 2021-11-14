@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 router.get("/:userId", (req, res) => {
     const userId = req.params.userId;
     const userReasons = reasonController.getReasonsByUser(userId);
-    res.send({ success: true, userReasons });
+    res.send({ success: true, userReasons: userReasons });
 });
 
 module.exports = router;

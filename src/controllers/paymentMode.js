@@ -17,6 +17,7 @@ function getCreditPaymentModesByUser(userId) {
     return creditPaymentModes;
 }
 
+
 function getPaymentModesByUser(userId) {
     return paymentModes.filter(paymentMode => paymentMode.userId == userId);
 }
@@ -28,7 +29,8 @@ function subtractToAvailable(userId, paymentModeToUpdate, amount) {
 
 function AddToAvailable(userId, paymentModeToUpdate, amount) {
     const userPaymentModes = getPaymentModesByUser(userId);
-    userPaymentModes.find(paymentMode => paymentMode.name === paymentModeToUpdate).available += amount;
+    const paymentMode = userPaymentModes.find(paymentMode => paymentMode.name === paymentModeToUpdate);
+    paymentMode.available += amount;
 }
 
 module.exports.getPaymentModes = getPaymentModes;
@@ -36,3 +38,4 @@ module.exports.getDebitPaymentModesByUser = getDebitPaymentModesByUser;
 module.exports.getCreditPaymentModesByUser = getCreditPaymentModesByUser;
 module.exports.subtractToAvailable = subtractToAvailable;
 module.exports.AddToAvailable = AddToAvailable;
+module.exports.getPaymentModesByUser = getPaymentModesByUser;
