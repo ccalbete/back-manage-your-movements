@@ -32,7 +32,7 @@ router.post("/", (req, res, next) => {
 
         if (category && amount && paymentMode) {
             expenseController.saveExpense(userId, date, place, category, amount, paymentMode);
-            res.send({ success: true });
+            return res.status(201).send();
         } else {
             return res.status(400).json({ success: false, message: "Required data is missing (category, amount, paymentMode)" });
         }

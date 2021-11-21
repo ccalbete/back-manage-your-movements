@@ -33,7 +33,7 @@ router.post("/", (req, res, next) => {
 
         if (amount && paymentMode) {
             incomeController.saveIncome(userId, date, reason, amount, paymentMode);
-            res.send({ success: true });
+            return res.status(201).send();
         } else {
             return res.status(400).json({ success: false, message: "Required data is missing (amount, paymentMode)" });
         }

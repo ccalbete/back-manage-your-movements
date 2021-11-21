@@ -32,7 +32,7 @@ router.post("/", (req, res, next) => {
 
         if (date && origin && amount && destination) {
             transferController.saveTransfer(userId, date, origin, amount, destination);
-            res.send({ success: true });
+            return res.status(201).send();
         } else {
             return res.status(400).json({ success: false, message: "Required data is missing (date, origin, amount, destination)" });
         }
