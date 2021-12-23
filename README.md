@@ -14,7 +14,7 @@ $ npm init
 
 ## Settings
 
-Create .env file in the root of repository with the variable PORT=3000 (the port must match with the port configured in frontend repository)
+Create .env file in the root of repository with the variable SERVERPORT=3000 (the port must match with the port configured in frontend repository)
 
 ## Quick Start
 

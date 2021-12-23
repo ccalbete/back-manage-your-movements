@@ -18,6 +18,6 @@ app.use(cors());
 app.use("/users", userRoutes);
 app.use("/", privateRoutes);
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server running, port: ${process.env.PORT}`);
+app.listen(process.env.SERVERPORT, () => {
+    console.log(`Server running, port: ${process.env.SERVERPORT}`);
 });

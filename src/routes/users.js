@@ -1,13 +1,24 @@
 const express = require("express");
 const router = express.Router();
+require("dotenv").config();
+const { Client } = require("pg");
+
 
 const userController = require('../controllers/user');
 const generateToken = require('../controllers/token');
 const verifyToken = require('../middleware/tokenValidation');
+const db = require("../../data");
+const client = new Client();
 
-router.get("/", verifyToken, (req, res) => {
-    const users = userController.getUsers();
-    res.send({ success: true, users });
+router.get("/", verifyToken, async (req, res) => {
+    client.connect();
+    const users = await db.query("select * from users");
+
+    res.send({
+        users: users.rows,
+    });
+
+    client.end();
 });
 
 /*
