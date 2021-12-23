@@ -21,18 +21,25 @@ async function userExists(username) {
 }
 
 async function encryptPassword(password) {
-    const salt = await bcrypt.genSalt(10);
-    const encryptedPassword = await bcrypt.hash(password, salt);
-    return encryptedPassword;
+    try {
+        const salt = await bcrypt.genSalt(10);
+        const encryptedPassword = await bcrypt.hash(password, salt);
+        return encryptedPassword;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function isValidPassword(receivedPassword, userPassword) {
-    const isValid = await bcrypt.compare(receivedPassword, userPassword);
-    return isValid;
+    try {
+        const isValid = await bcrypt.compare(receivedPassword, userPassword);
+        return isValid;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function createUser(username, encryptedPassword) {
-
     try {
         const client = new Client();
         client.connect();
