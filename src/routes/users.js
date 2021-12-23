@@ -71,7 +71,7 @@ router.post("/register", async (req, res, next) => {
 
             const encryptedPassword = await userController.encryptPassword(req.body.password);
 
-            userController.createUser(req.body.username, encryptedPassword);
+            await userController.createUser(req.body.username, encryptedPassword);
 
             return res.status(201).send();
 

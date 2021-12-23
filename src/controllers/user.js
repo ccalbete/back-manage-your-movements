@@ -1,12 +1,9 @@
-const users = require('../../data/users');
 const bcrypt = require("bcrypt");
 
 //database
 require("dotenv").config();
 const { Client } = require("pg");
 const db = require("../../data");
-
-
 
 async function userExists(username) {
     try {
@@ -34,14 +31,17 @@ async function isValidPassword(receivedPassword, userPassword) {
     return isValid;
 }
 
-function createUser(username, encryptedPassword) {
-    users.push(
-        {
-            userId: (userId++).toString(),
-            username,
-            password: encryptedPassword
-        }
-    );
+async function createUser(username, encryptedPassword) {
+
+    try {
+        const client = new Client();
+        client.connect();
+
+        await db.query("insert into users(username, password) values($1, $2)", [username, encryptedPassword]);
+
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 module.exports.userExists = userExists;
