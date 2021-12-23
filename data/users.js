@@ -2,7 +2,7 @@ module.exports = [
     {
         "userId": "1",
         "username": "a",
-        "password": "$2b$10$bUgp5UtfezUKsqP5u/ZgJOH1vGm8bBbORrwmJ8k5ey6Jd8X7CKd3q"
+        "password": "$2b$10$FP28QaANbELDLWGGtP19buncOSvpOVDo8/G9qhS0ID30Lfa5Q2UD6"
     },
     {
         "userId": "2",

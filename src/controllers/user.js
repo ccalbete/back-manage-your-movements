@@ -18,7 +18,7 @@ function userExists(username) {
 async function encryptPassword(password) {
     const salt = await bcrypt.genSalt(10);
     const encryptedPassword = await bcrypt.hash(password, salt);
-    return encryptPassword;
+    return encryptedPassword;
 }
 
 async function isValidPassword(receivedPassword, userPassword) {
@@ -27,6 +27,7 @@ async function isValidPassword(receivedPassword, userPassword) {
 }
 
 function createUser(username, encryptedPassword) {
+    console.log("aca " + encryptedPassword);
     users.push(
         {
             userId: (userId++).toString(),
