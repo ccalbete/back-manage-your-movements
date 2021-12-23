@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const secretToken = require('./../../data/sign');
+require("dotenv").config();
 
 const verifyToken = (req, res, next) => {
     try {
@@ -7,7 +7,7 @@ const verifyToken = (req, res, next) => {
 
         if (!token) return res.status(403).json({ error: "Access denied" });
 
-        const verifiedToken = jwt.verify(token, secretToken);
+        const verifiedToken = jwt.verify(token, process.env.SIGN);
 
         req.user = verifiedToken;
         next();
