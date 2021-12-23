@@ -1,18 +1,26 @@
 const users = require('../../data/users');
 const bcrypt = require("bcrypt");
 
-//starts in 4 because in data/users there are 3 hardcoded users 
-let userId = 4;
+//database
+require("dotenv").config();
+const { Client } = require("pg");
+const db = require("../../data");
 
-function getUsers() {
-    return users;
-}
 
-function userExists(username) {
-    const exists = users.find((user) => {
-        return user.username === username;
-    });
-    return exists;
+
+async function userExists(username) {
+    try {
+        const client = new Client();
+        client.connect();
+
+        const users = await db.query("select * from users where username= $1", [username]);
+
+        client.end();
+
+        return users.rows[0];
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function encryptPassword(password) {
@@ -27,7 +35,6 @@ async function isValidPassword(receivedPassword, userPassword) {
 }
 
 function createUser(username, encryptedPassword) {
-    console.log("aca " + encryptedPassword);
     users.push(
         {
             userId: (userId++).toString(),
@@ -37,7 +44,6 @@ function createUser(username, encryptedPassword) {
     );
 }
 
-module.exports.getUsers = getUsers;
 module.exports.userExists = userExists;
 module.exports.encryptPassword = encryptPassword;
 module.exports.isValidPassword = isValidPassword;

@@ -6,7 +6,7 @@ CREATE TABLE users(
   password VARCHAR(200) NOT NULL
 );
 
-INSERT INTO users (username, password) VALUES ('test', '$2b$10$FP28QaANbELDLWGGtP19buncOSvpOVDo8/G9qhS0ID30Lfa5Q2UD6');
+INSERT INTO users (username, password) VALUES ('test', '$2b$10$0OLogE.KEIefHFGATP3K6.irldRqcapHg15FNVRD..7X5pjLpw/we');
 
 INSERT INTO users (username, password) VALUES ('user', '$2b$10$uS.ekKPXgnx6JKpgTr42U.AtVw7eor2PIGEzTxBDQ.523RUy2r63C');
 

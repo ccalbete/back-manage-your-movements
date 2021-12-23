@@ -1,24 +1,31 @@
 const express = require("express");
 const router = express.Router();
+
+//database
 require("dotenv").config();
 const { Client } = require("pg");
+const db = require("../../data");
 
 
 const userController = require('../controllers/user');
 const generateToken = require('../controllers/token');
 const verifyToken = require('../middleware/tokenValidation');
-const db = require("../../data");
-const client = new Client();
 
-router.get("/", verifyToken, async (req, res) => {
-    client.connect();
-    const users = await db.query("select * from users");
+router.get("/", verifyToken, async (req, res, next) => {
+    try {
+        const client = new Client();
 
-    res.send({
-        users: users.rows,
-    });
+        client.connect();
+        const users = await db.query("select * from users");
 
-    client.end();
+        res.send({
+            users: users.rows,
+        });
+        client.end();
+    } catch (error) {
+        next(error);
+    }
+
 });
 
 /*
@@ -30,8 +37,7 @@ router.post("/login", async (req, res, next) => {
 
         if (req.body.username && req.body.password) {
 
-            const user = userController.userExists(req.body.username)
-
+            const user = await userController.userExists(req.body.username)
             if (user) {
                 const validPassword = await userController.isValidPassword(req.body.password, user.password);
 
@@ -54,14 +60,14 @@ router.post("/login", async (req, res, next) => {
 });
 
 /*
-    Username must be unique
+    Username is unique
     When the user is created, an id is assigned to him and the password is encrypted
 */
 router.post("/register", async (req, res, next) => {
     try {
         if (req.body.username && req.body.password) {
 
-            if (userController.userExists(req.body.username)) return res.status(400).json({ success: false, message: "Username already registered" });
+            if (await userController.userExists(req.body.username)) return res.status(400).json({ success: false, message: "Username already registered" });
 
             const encryptedPassword = await userController.encryptPassword(req.body.password);
 

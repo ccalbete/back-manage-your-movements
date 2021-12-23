@@ -24,6 +24,9 @@ Run the following command and wait to see "Server running, port: 3000" in the co
 $ npm run dev
 ```
 
+username: test
+password: prueba
+
 ## Authors
 
 Contributors names and contact info
