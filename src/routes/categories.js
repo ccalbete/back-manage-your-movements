@@ -14,8 +14,7 @@ router.get("/", (req, res, next) => {
 
 router.get("/:userId", (req, res) => {
     try {
-        const userId = req.params.userId;
-        const userCategories = categoryController.getCategoriesByUser(userId);
+        const userCategories = categoryController.getCategoriesByUser(req.params.userId);
         res.send({ success: true, userCategories });
     } catch (error) {
         return next(error);
@@ -24,8 +23,7 @@ router.get("/:userId", (req, res) => {
 
 router.get("/:userId/fixedExpenses", (req, res, next) => {
     try {
-        const userId = req.params.userId;
-        const userFixedExpensesCategories = categoryController.getFixedExpensesCategoriesByUser(userId);
+        const userFixedExpensesCategories = categoryController.getFixedExpensesCategoriesByUser(req.params.userId);
         res.send({ success: true, userFixedExpensesCategories });
     } catch (error) {
         return next(error);
@@ -34,8 +32,7 @@ router.get("/:userId/fixedExpenses", (req, res, next) => {
 
 router.get("/:userId/notFixedExpenses", (req, res, next) => {
     try {
-        const userId = req.params.userId;
-        const userNotFixedExpensesCategories = categoryController.getNotFixedExpensesCategoriesByUser(userId);
+        const userNotFixedExpensesCategories = categoryController.getNotFixedExpensesCategoriesByUser(req.params.userId);
         res.send({ success: true, userNotFixedExpensesCategories });
     } catch (error) {
         return next(error);

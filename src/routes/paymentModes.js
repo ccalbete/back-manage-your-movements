@@ -15,8 +15,7 @@ router.get("/", (req, res, next) => {
 
 router.get("/:userId", (req, res, next) => {
     try {
-        const userId = req.params.userId;
-        const userPaymentModes = paymentModeController.getPaymentModesByUser(userId);
+        const userPaymentModes = paymentModeController.getPaymentModesByUser(req.params.userId);
         res.send({ success: true, userPaymentModes });
     } catch (error) {
         return next(error);
@@ -38,7 +37,7 @@ router.get("/:userId/credit", (req, res, next) => {
     try {
         const userId = req.params.userId;
         const creditPaymentModes = paymentModeController.getCreditPaymentModesByUser(userId);
-        res.send({ success: true, creditPaymentModes });
+        res.send({ success: true, userId, creditPaymentModes });
     } catch (error) {
         return next(error);
     }

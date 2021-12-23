@@ -33,18 +33,19 @@ If username and password exists, the response is http 200 and an identificator t
 If username or password is incorrect, the api return "Wrong username or password" for more security 
 */
 router.post("/login", async (req, res, next) => {
+    const { username, password } = req.body;
     try {
 
-        if (req.body.username && req.body.password) {
+        if (username && password) {
 
-            const user = await userController.userExists(req.body.username)
-            if (user) {
-                const validPassword = await userController.isValidPassword(req.body.password, user.password);
+            const dbUser = await userController.userExists(username)
+            if (dbUser) {
+                const validPassword = await userController.isValidPassword(password, dbUser.password);
 
                 if (validPassword) {
-                    const generatedToken = generateToken(user.userId, user.username, user.password);
+                    const generatedToken = generateToken(dbUser);
 
-                    return res.status(200).json({ success: true, userId: user.userId, token: generatedToken });
+                    return res.status(200).json({ success: true, userId: dbUser.userId, token: generatedToken });
                 } else {
                     return res.status(400).json({ success: false, message: "Wrong username or password" });
                 }
@@ -64,14 +65,16 @@ router.post("/login", async (req, res, next) => {
     When the user is created, an id is assigned to him and the password is encrypted
 */
 router.post("/register", async (req, res, next) => {
+    const { username, password } = req.body;
+
     try {
-        if (req.body.username && req.body.password) {
+        if (username && password) {
 
-            if (await userController.userExists(req.body.username)) return res.status(400).json({ success: false, message: "Username already registered" });
+            if (await userController.userExists(username)) return res.status(400).json({ success: false, message: "Username already registered" });
 
-            const encryptedPassword = await userController.encryptPassword(req.body.password);
+            const encryptedPassword = await userController.encryptPassword(password);
 
-            await userController.createUser(req.body.username, encryptedPassword);
+            await userController.createUser(username, encryptedPassword);
 
             return res.status(201).send();
 

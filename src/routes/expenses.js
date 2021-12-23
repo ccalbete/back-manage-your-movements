@@ -13,8 +13,7 @@ router.get("/", (req, res, next) => {
 
 router.get("/:userId", (req, res, next) => {
     try {
-        const userId = req.params.userId;
-        const userExpenses = expenseController.getExpensesByUser(userId);
+        const userExpenses = expenseController.getExpensesByUser(req.params.userId);
         res.send({ success: true, userExpenses });
     } catch (error) {
         return next(error);
@@ -24,11 +23,7 @@ router.get("/:userId", (req, res, next) => {
 router.post("/", (req, res, next) => {
     try {
         const userId = req.user.userId;
-        const date = req.body.date;
-        const place = req.body.place;
-        const category = req.body.category;
-        const amount = req.body.amount;
-        const paymentMode = req.body.paymentMode;
+        const { date, place, category, amount, paymentMode } = req.body;
 
         if (category && amount && paymentMode) {
             expenseController.saveExpense(userId, date, place, category, amount, paymentMode);

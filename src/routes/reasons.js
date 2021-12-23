@@ -14,8 +14,7 @@ router.get("/", (req, res, next) => {
 
 router.get("/:userId", (req, res, next) => {
     try {
-        const userId = req.params.userId;
-        const userReasons = reasonController.getReasonsByUser(userId);
+        const userReasons = reasonController.getReasonsByUser(req.params.userId);
         res.send({ success: true, userReasons: userReasons });
     } catch (error) {
         return next(error);

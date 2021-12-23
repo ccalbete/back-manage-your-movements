@@ -5,7 +5,6 @@ const placeController = require('../controllers/place');
 
 router.get("/", (req, res, next) => {
     try {
-
         const places = placeController.getPlaces();
         res.send({ success: true, places });
     } catch (error) {
@@ -15,8 +14,7 @@ router.get("/", (req, res, next) => {
 
 router.get("/:userId", (req, res) => {
     try {
-        const userId = req.params.userId;
-        const userPlaces = placeController.getPlacesByUser(userId);
+        const userPlaces = placeController.getPlacesByUser(req.params.userId);
         res.send({ success: true, userPlaces: userPlaces });
     } catch (error) {
         return next(error);

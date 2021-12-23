@@ -14,8 +14,7 @@ router.get("/", (req, res, next) => {
 
 router.get("/:userId", (req, res, next) => {
     try {
-        const userId = req.params.userId;
-        const userTransfers = transferController.getTransfersByUser(userId);
+        const userTransfers = transferController.getTransfersByUser(req.params.userId);
         res.send({ success: true, userTransfers });
     } catch (error) {
         return next(error);
@@ -24,11 +23,7 @@ router.get("/:userId", (req, res, next) => {
 
 router.post("/", (req, res, next) => {
     try {
-        const userId = req.user.userId;
-        const date = req.body.date;
-        const origin = req.body.origin;
-        const amount = req.body.amount;
-        const destination = req.body.destination;
+        const { userId, date, origin, amount, destination } = req.body;
 
         if (date && origin && amount && destination) {
             transferController.saveTransfer(userId, date, origin, amount, destination);
