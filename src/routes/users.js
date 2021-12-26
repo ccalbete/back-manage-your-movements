@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 //database
-require("dotenv").config();
-const { Client } = require("pg");
 const db = require("../../data");
 
 
@@ -13,15 +11,11 @@ const verifyToken = require('../middleware/tokenValidation');
 
 router.get("/", verifyToken, async (req, res, next) => {
     try {
-        const client = new Client();
-
-        client.connect();
         const users = await db.query("select * from users");
 
         res.send({
             users: users.rows,
         });
-        client.end();
     } catch (error) {
         next(error);
     }
@@ -70,7 +64,8 @@ router.post("/register", async (req, res, next) => {
     try {
         if (username && password) {
 
-            if (await userController.userExists(username)) return res.status(400).json({ success: false, message: "Username already registered" });
+            const userExists = await userController.userExists(username);
+            if (userExists) return res.status(400).json({ success: false, message: "Username already registered" });
 
             const encryptedPassword = await userController.encryptPassword(password);
 

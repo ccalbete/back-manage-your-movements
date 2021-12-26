@@ -17,12 +17,14 @@ function getCreditPaymentModesByUser(userId) {
 }
 
 function getPaymentModesByUser(userId) {
-    return paymentModes.filter(paymentMode => paymentMode.userId == userId);
+    const retorno = paymentModes.filter(paymentMode => paymentMode.userId == userId);
+    return retorno;
 }
 
 function subtractToAvailable(userId, paymentModeToUpdate, amount) {
     const userPaymentModes = getPaymentModesByUser(userId);
-    userPaymentModes.find(paymentMode => paymentMode.name === paymentModeToUpdate).available -= amount;
+    const paymentMode = userPaymentModes.find(paymentMode => paymentMode.name === paymentModeToUpdate)
+    paymentMode.available -= amount;
 }
 
 function addToAvailable(userId, paymentModeToUpdate, amount) {

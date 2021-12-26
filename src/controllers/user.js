@@ -1,22 +1,14 @@
 const bcrypt = require("bcrypt");
 
 //database
-require("dotenv").config();
-const { Client } = require("pg");
 const db = require("../../data");
 
 async function userExists(username) {
     try {
-        const client = new Client();
-        client.connect();
-
         const users = await db.query("select * from users where username= $1", [username]);
-
-        client.end();
-
         return users.rows[0];
     } catch (error) {
-        console.log(error);
+        throw new Error(error);
     }
 }
 
@@ -26,7 +18,7 @@ async function encryptPassword(password) {
         const encryptedPassword = await bcrypt.hash(password, salt);
         return encryptedPassword;
     } catch (error) {
-        console.log(error);
+        throw new Error(error);
     }
 }
 
@@ -35,19 +27,16 @@ async function isValidPassword(receivedPassword, userPassword) {
         const isValid = await bcrypt.compare(receivedPassword, userPassword);
         return isValid;
     } catch (error) {
-        console.log(error);
+        throw new Error(error);
     }
 }
 
 async function createUser(username, encryptedPassword) {
     try {
-        const client = new Client();
-        client.connect();
-
         await db.query("insert into users(username, password) values($1, $2)", [username, encryptedPassword]);
 
     } catch (error) {
-        console.log(error);
+        throw new Error(error)
     }
 }
 
