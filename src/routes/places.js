@@ -3,18 +3,18 @@ const router = express.Router();
 
 const placeController = require('../controllers/place');
 
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
     try {
-        const places = placeController.getPlaces();
+        const places = await placeController.getPlaces();
         res.send({ success: true, places });
     } catch (error) {
         return next(error);
     }
 });
 
-router.get("/:userId", (req, res) => {
+router.get("/:userId", async (req, res) => {
     try {
-        const userPlaces = placeController.getPlacesByUser(req.params.userId);
+        const userPlaces = await placeController.getPlacesByUser(req.params.userId);
         res.send({ success: true, userPlaces: userPlaces });
     } catch (error) {
         return next(error);

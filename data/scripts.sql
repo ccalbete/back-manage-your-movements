@@ -34,5 +34,21 @@ insert into reasons(user_id, name) values(1, 'Gift');
 insert into reasons(user_id, name) values(1, 'Leftover last month');
 insert into reasons(user_id, name) values(2, 'Leftover last month');
 
+CREATE TABLE places(
+  id SERIAL NOT NULL,
+  user_id int NOT NULL, 
+  name VARCHAR(200) NOT NULL,
+	PRIMARY KEY (id, user_id, name),
+	FOREIGN KEY (user_id) REFERENCES users(id)
+);
 
-
+insert into places(user_id, name) values(1, 'Supermarket Frog');
+insert into places(user_id, name) values(1, 'Supermarket Disco');
+insert into places(user_id, name) values(1, 'Brou webpage');
+insert into places(user_id, name) values(1, 'Santander webpage');
+insert into places(user_id, name) values(1, 'Pharmacy Farmashop');
+insert into places(user_id, name) values(1, 'Pharmacy San Roque');
+insert into places(user_id, name) values(1, 'University ORT');
+insert into places(user_id, name) values(1, 'Abitab');
+insert into places(user_id, name) values(2, 'Pharmacy');
+insert into places(user_id, name) values(3, 'Surpermarket');
