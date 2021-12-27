@@ -13,14 +13,16 @@ async function getTransfers() {
     }
 }
 
-function getTransfersByUser(userId) {
-    const userTransfers = transfers.filter(transfer => transfer.userId == userId);
-    return userTransfers;
+async function getTransfersByUser(userId) {
+    try {
+        const transfers = await db.query("select * from transfers where user_id='" + userId + "'");
+        return transfers.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
 async function saveTransfer(userId, date, origin, amount, destination) {
-
-
     try {
         paymentModeController.subtractToAvailable(userId, origin, amount);
         paymentModeController.addToAvailable(userId, destination, amount);
