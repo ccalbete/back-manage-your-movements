@@ -11,3 +11,10 @@ INSERT INTO users (username, password) VALUES ('test', '$2b$10$0OLogE.KEIefHFGAT
 INSERT INTO users (username, password) VALUES ('user', '$2b$10$uS.ekKPXgnx6JKpgTr42U.AtVw7eor2PIGEzTxBDQ.523RUy2r63C');
 
 
+CREATE TABLE transfers(
+  id SERIAL NOT NULL PRIMARY KEY,
+  username VARCHAR(200) NOT NULL UNIQUE,
+  password VARCHAR(200) NOT NULL
+);
+
+

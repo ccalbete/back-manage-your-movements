@@ -3,6 +3,7 @@ const router = express.Router();
 
 const transferController = require('../controllers/transfer');
 
+
 router.get("/", (req, res, next) => {
     try {
         const transfers = transferController.getTransfers();
@@ -23,7 +24,8 @@ router.get("/:userId", (req, res, next) => {
 
 router.post("/", (req, res, next) => {
     try {
-        const { userId, date, origin, amount, destination } = req.body;
+        const userId = req.user.userId;
+        const { date, origin, amount, destination } = req.body;
 
         if (date && origin && amount && destination) {
             transferController.saveTransfer(userId, date, origin, amount, destination);

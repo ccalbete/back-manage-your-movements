@@ -39,7 +39,7 @@ router.post("/login", async (req, res, next) => {
                 if (validPassword) {
                     const generatedToken = generateToken(dbUser);
 
-                    return res.status(200).json({ success: true, userId: dbUser.userId, token: generatedToken });
+                    return res.status(200).json({ success: true, userId: dbUser.id, token: generatedToken });
                 } else {
                     return res.status(400).json({ success: false, message: "Wrong username or password" });
                 }

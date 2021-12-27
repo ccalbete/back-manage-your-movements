@@ -1,7 +1,16 @@
 const paymentModeController = require("./paymentMode");
 const transfers = require("../../data/transfers");
 
+//database
+const db = require("../../data");
+
 function getTransfers() {
+    // try {
+    //     const transfers = await db.query("select * from transfers");
+    //     return transfers.rows;
+    // } catch (error) {
+    //     throw new Error(error);
+    // }
     return transfers;
 }
 
