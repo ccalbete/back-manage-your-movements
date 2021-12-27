@@ -3,18 +3,18 @@ const router = express.Router();
 
 const reasonController = require('../controllers/reason');
 
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
     try {
-        const reasons = reasonController.getReasons();
+        const reasons = await reasonController.getReasons();
         res.send({ success: true, reasons });
     } catch (error) {
         return next(error);
     }
 });
 
-router.get("/:userId", (req, res, next) => {
+router.get("/:userId", async (req, res, next) => {
     try {
-        const userReasons = reasonController.getReasonsByUser(req.params.userId);
+        const userReasons = await reasonController.getReasonsByUser(req.params.userId);
         res.send({ success: true, userReasons: userReasons });
     } catch (error) {
         return next(error);

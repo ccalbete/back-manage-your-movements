@@ -1,12 +1,24 @@
 const reasons = require('../../data/reasons');
 
-function getReasons() {
-    return reasons;
+//database
+const db = require("../../data");
+
+async function getReasons() {
+    try {
+        const reasons = await db.query("select * from reasons");
+        return reasons.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
-function getReasonsByUser(userId) {
-    const userReasons = reasons.filter(reason => reason.userId == userId);
-    return userReasons;
+async function getReasonsByUser(userId) {
+    try {
+        const reasons = await db.query("select * from reasons where user_id='" + userId + "'");
+        return reasons.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
 module.exports.getReasons = getReasons;

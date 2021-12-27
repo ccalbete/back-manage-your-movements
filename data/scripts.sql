@@ -21,3 +21,18 @@ CREATE TABLE transfers(
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE reasons(
+  id SERIAL NOT NULL,
+  user_id int NOT NULL, 
+  name VARCHAR(200) NOT NULL,
+	PRIMARY KEY (id, user_id, name),
+	FOREIGN KEY (user_id) REFERENCES users(id)
+)
+
+insert into reasons(user_id, name) values(1, 'Salary');
+insert into reasons(user_id, name) values(1, 'Gift');
+insert into reasons(user_id, name) values(1, 'Leftover last month');
+insert into reasons(user_id, name) values(2, 'Leftover last month');
+
+
+

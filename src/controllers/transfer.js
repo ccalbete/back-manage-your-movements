@@ -1,5 +1,4 @@
 const paymentModeController = require("./paymentMode");
-const transfers = require("../../data/transfers");
 
 //database
 const db = require("../../data");
