@@ -1,36 +1,66 @@
-const categories = require('../../data/categories');
+//database
+const db = require("../../data");
 
-
-function getCategories() {
-    return categories;
+async function getCategories() {
+    try {
+        const categories = await db.query("select * from categories");
+        return categories.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
-function getCategoriesByUser(userId) {
-    const userCategories = categories.filter(category => category.userId == userId);
-    return userCategories;
+async function getCategoriesByUser(userId) {
+    try {
+        const userCategories = await db.query("select * from categories where user_id=" + userId);
+        return userCategories.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
-function addToSpent(userId, categoryToUpdate, amount) {
-    const userCategories = getCategoriesByUser(userId);
-    const selectedCategory = userCategories.find(category => category.name === categoryToUpdate);
-    selectedCategory.spent += amount;
+async function getCategoryId(userId, name) {
+    try {
+        const category = await db.query("select id from categories where name='" + name + "' and user_id=" + userId);
+        return category.rows[0].id;
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
-function getFixedExpensesCategoriesByUser(userId) {
-    const userCategories = categories.filter(category => category.userId == userId);
-    const fixedExpensesCategories = userCategories.filter(category => category.isFixedExpense);
-    return fixedExpensesCategories;
+
+async function addToSpent(userId, categoryToUpdate, amount) {
+    try {
+        const currentSpent = await db.query("select spent from categories where user_id=" + userId + " and name= '" + categoryToUpdate + "'")
+        const newSpent = currentSpent.rows[0].spent + amount;
+        await db.query("update categories set spent=" + newSpent + " where user_id=" + userId + " and name= '" + categoryToUpdate + "'")
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
-function getNotFixedExpensesCategoriesByUser(userId) {
-    const userCategories = categories.filter(category => category.userId == userId);
-    const notFixedExpensesCategories = userCategories.filter(category => !category.isFixedExpense);
-    return notFixedExpensesCategories;
+async function getFixedExpensesCategoriesByUser(userId) {
+    try {
+        const userCategories = await db.query("select * from categories where user_id=" + userId + " and is_fixed_expense=true");
+        return userCategories.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+async function getNotFixedExpensesCategoriesByUser(userId) {
+    try {
+        const userCategories = await db.query("select * from categories where user_id=" + userId + " and is_fixed_expense=false");
+        return userCategories.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
 
 module.exports.getCategories = getCategories;
 module.exports.getCategoriesByUser = getCategoriesByUser;
+module.exports.getCategoryId = getCategoryId;
 module.exports.addToSpent = addToSpent;
 module.exports.getFixedExpensesCategoriesByUser = getFixedExpensesCategoriesByUser;
 module.exports.getNotFixedExpensesCategoriesByUser = getNotFixedExpensesCategoriesByUser;

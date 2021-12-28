@@ -30,7 +30,7 @@ async function saveIncome(userId, reason, paymentMode, date, amount) {
         await db.query("insert into incomes(user_id, reason_id, payment_mode_id, date, amount) values($1, $2, $3, $4, $5)",
             [userId, reason_id, payment_mode_id, date, amount]);
 
-        //if the transfer was correctly saved, update available of payment mode
+        //if the income was correctly saved, update available of payment mode
         await paymentModeController.addToAvailable(userId, paymentMode, amount);
     } catch (error) {
         throw new Error(error)

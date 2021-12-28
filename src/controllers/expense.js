@@ -1,33 +1,48 @@
 const categoryController = require("./category");
 const paymentModeController = require("./paymentMode");
+const placeController = require("./place");
 const expenses = require("../../data/expenses");
-const paymentModes = require("../../data/paymentModes");
 
 
-function getExpenses() {
-    return expenses;
+//database
+const db = require("../../data");
+
+
+async function getExpenses() {
+    try {
+        const expenses = await db.query("select * from expenses");
+        return expenses.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
-function getExpensesByUser(userId) {
-    const userExpenses = expenses.filter(expense => expense.userId == userId);
-    return userExpenses;
+async function getExpensesByUser(userId) {
+    try {
+        const userExpenses = await db.query("select * from expenses where user_id=" + userId);
+        return userExpenses.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 };
 
-async function saveExpense(userId, date, place, category, amount, paymentMode) {
-    categoryController.addToSpent(userId, category, amount);
-    paymentModeController.addToSpent(userId, paymentMode, amount);
-    await paymentModeController.subtractToAvailable(userId, paymentMode, amount);
+async function saveExpense(userId, amount, paymentMode, place, category, date) {
+    try {
 
-    expenses.push(
-        {
-            userId,
-            date,
-            place,
-            category,
-            amount,
-            paymentMode
-        }
-    );
+        const payment_mode_id = await paymentModeController.getPaymentModeId(userId, paymentMode);
+        const place_id = await placeController.getPlaceId(userId, place);
+        const category_id = await categoryController.getCategoryId(userId, category);
+
+        await db.query("insert into expenses(user_id, amount, payment_mode_id, place_id, category_id, date) values($1, $2, $3, $4, $5, $6)",
+            [userId, amount, payment_mode_id, place_id, category_id, date]);
+
+        //if the expense was correctly saved, update available of payment mode
+        await categoryController.addToSpent(userId, category, amount);
+        await paymentModeController.addToSpent(userId, paymentMode, amount);
+        await paymentModeController.subtractToAvailable(userId, paymentMode, amount);
+    } catch (error) {
+        throw new Error(error)
+    }
 
 }
 

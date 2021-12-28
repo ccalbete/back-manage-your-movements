@@ -11,11 +11,39 @@ CREATE TABLE users(
 INSERT INTO users (username, password) VALUES ('test', '$2b$10$0OLogE.KEIefHFGATP3K6.irldRqcapHg15FNVRD..7X5pjLpw/we');
 INSERT INTO users (username, password) VALUES ('user', '$2b$10$uS.ekKPXgnx6JKpgTr42U.AtVw7eor2PIGEzTxBDQ.523RUy2r63C');
 
+
+CREATE TABLE categories(
+  id SERIAL NOT NULL UNIQUE,
+  user_id int NOT NULL, 
+  name VARCHAR(200) NOT NULL,
+	is_fixed_expense boolean,
+	spent int NOT NULL,
+	PRIMARY KEY (user_id, name),
+	FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Food', false, 0);
+insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Outings', false, 500);
+insert into categories(user_id, name, spent) values(1, 'Clothes',  500); 
+insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Transportation', false, 150); 
+insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Cleaning', false, 50); 
+insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Pharmacy', false, 130); 
+insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'University', true, 600); 
+insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Booking', true, 752); 
+insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Credit card', true, 0); 
+insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'English course', true, 0); 
+insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Gym', true, 0); 
+insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Internet', true, 200); 
+insert into categories(user_id, name, is_fixed_expense, spent) values(2, 'Clothes', false, 165); 
+insert into categories(user_id, name, is_fixed_expense, spent) values(2, 'Booking', true, 325); 
+
+
+
 CREATE TABLE reasons(
   id SERIAL NOT NULL UNIQUE,
   user_id int NOT NULL, 
   name VARCHAR(200) NOT NULL,
-	PRIMARY KEY (id, user_id, name),
+	PRIMARY KEY (user_id, name),
 	FOREIGN KEY (user_id) REFERENCES users(id)
 )
 
@@ -25,10 +53,10 @@ insert into reasons(user_id, name) values(1, 'Leftover last month');
 insert into reasons(user_id, name) values(2, 'Leftover last month');
 
 CREATE TABLE places(
-  id SERIAL NOT NULL,
+  id SERIAL NOT NULL UNIQUE,
   user_id int NOT NULL, 
   name VARCHAR(200) NOT NULL,
-	PRIMARY KEY (id, user_id, name),
+	PRIMARY KEY (user_id, name),
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -52,7 +80,7 @@ CREATE TABLE payment_modes(
 	spent int NOT NULL,
 	is_debit boolean NOT NULL,
 	available int,
-	PRIMARY KEY (id, user_id, name),
+	PRIMARY KEY (user_id, name),
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -68,6 +96,32 @@ insert into payment_modes(user_id, name, spent, is_debit, available) values(2, '
 
 --> history tables
 
+CREATE TABLE expenses(
+  id SERIAL NOT NULL PRIMARY KEY,
+  user_id int NOT NULL, 
+  amount int NOT NULL,
+  payment_mode_id int NOT NULL,
+  place_id int,
+  category_id int,
+  date VARCHAR(200) NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (payment_mode_id) REFERENCES payment_modes(id),
+  FOREIGN KEY (place_id) REFERENCES places(id),
+  FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
+CREATE TABLE incomes(
+   id SERIAL NOT NULL PRIMARY KEY,
+  user_id int NOT NULL,
+  reason_id int NOT NULL,
+  payment_mode_id int NOT NULL,
+  date VARCHAR(200) NOT NULL,
+	amount int NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (reason_id) REFERENCES reasons(id),
+  FOREIGN KEY (payment_mode_id) REFERENCES payment_modes(id)
+);
+
 CREATE TABLE transfers(
   id SERIAL NOT NULL PRIMARY KEY,
   user_id int NOT NULL, 
@@ -77,20 +131,5 @@ CREATE TABLE transfers(
   destination VARCHAR(200),
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
-
-
-CREATE TABLE incomes(
-  id SERIAL NOT NULL,
-  user_id int NOT NULL,
-  reason_id int NOT NULL,
-  payment_mode_id int NOT NULL,
-  date VARCHAR(200) NOT NULL,
-	amount int NOT NULL,
-	PRIMARY KEY (id),
-	FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (reason_id) REFERENCES reasons(id),
-  FOREIGN KEY (payment_mode_id) REFERENCES payment_modes(id)
-);
-
 
 
