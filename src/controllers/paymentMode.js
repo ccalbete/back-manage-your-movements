@@ -46,31 +46,31 @@ async function getCreditPaymentModesByUser(userId) {
     }
 }
 
-async function subtractToAvailable(userId, paymentModeToUpdate, amount) {
+async function subtractToAvailable(userId, paymentModeIdToUpdate, amount) {
     try {
-        const currentAvailable = await db.query("select available from payment_modes where user_id=" + userId + " and name= '" + paymentModeToUpdate + "'")
+        const currentAvailable = await db.query("select available from payment_modes where user_id=" + userId + " and id=" + paymentModeIdToUpdate)
         const newAvailable = currentAvailable.rows[0].available - amount;
-        await db.query("update payment_modes set available=" + newAvailable + " where user_id=" + userId + " and name= '" + paymentModeToUpdate + "'")
+        await db.query("update payment_modes set available=" + newAvailable + " where user_id=" + userId + " and id=" + paymentModeIdToUpdate)
     } catch (error) {
         throw new Error(error);
     }
 }
 
-async function addToAvailable(userId, paymentModeToUpdate, amount) {
+async function addToAvailable(userId, paymentModeIdToUpdate, amount) {
     try {
-        const currentAvailable = await db.query("select available from payment_modes where user_id=" + userId + " and name= '" + paymentModeToUpdate + "'")
+        const currentAvailable = await db.query("select available from payment_modes where user_id=" + userId + " and id=" + paymentModeIdToUpdate)
         const newAvailable = currentAvailable.rows[0].available + amount;
-        await db.query("update payment_modes set available=" + newAvailable + " where user_id=" + userId + " and name= '" + paymentModeToUpdate + "'")
+        await db.query("update payment_modes set available=" + newAvailable + " where user_id=" + userId + " and id=" + paymentModeIdToUpdate)
     } catch (error) {
         throw new Error(error);
     }
 }
 
-async function addToSpent(userId, paymentModeToUpdate, amount) {
+async function addToSpent(userId, paymentModeIdToUpdate, amount) {
     try {
-        const currentSpent = await db.query("select spent from payment_modes where user_id=" + userId + " and name= '" + paymentModeToUpdate + "'")
+        const currentSpent = await db.query("select spent from payment_modes where user_id=" + userId + " and id=" + paymentModeIdToUpdate)
         const newSpent = currentSpent.rows[0].spent + amount;
-        await db.query("update payment_modes set spent=" + newSpent + " where user_id=" + userId + " and name= '" + paymentModeToUpdate + "'")
+        await db.query("update payment_modes set spent=" + newSpent + " where user_id=" + userId + " and id=" + paymentModeIdToUpdate)
     } catch (error) {
         throw new Error(error);
     }

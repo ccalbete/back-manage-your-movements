@@ -14,7 +14,7 @@ async function getTransfers() {
 
 async function getTransfersByUser(userId) {
     try {
-        const transfers = await db.query("select * from transfers where user_id='" + userId + "'");
+        const transfers = await db.query("select * from transfers where user_id=" + userId);
         return transfers.rows;
     } catch (error) {
         throw new Error(error);
@@ -29,8 +29,8 @@ async function saveTransfer(userId, date, origin, amount, destination) {
             [userId, date, origin_payment_mode_id, amount, destination_payment_mode_id]);
 
         //if the transfer was correctly saved, update available of payment modes
-        await paymentModeController.subtractToAvailable(userId, origin, amount);
-        await paymentModeController.addToAvailable(userId, destination, amount);
+        await paymentModeController.subtractToAvailable(userId, origin_payment_mode_id, amount);
+        await paymentModeController.addToAvailable(userId, destination_payment_mode_id, amount);
     } catch (error) {
         throw new Error(error)
     }

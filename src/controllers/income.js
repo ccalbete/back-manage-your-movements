@@ -31,7 +31,7 @@ async function saveIncome(userId, reason, paymentMode, date, amount) {
             [userId, reason_id, payment_mode_id, date, amount]);
 
         //if the income was correctly saved, update available of payment mode
-        await paymentModeController.addToAvailable(userId, paymentMode, amount);
+        await paymentModeController.addToAvailable(userId, payment_mode_id, amount);
     } catch (error) {
         throw new Error(error)
     }

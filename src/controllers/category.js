@@ -29,11 +29,11 @@ async function getCategoryId(userId, name) {
 }
 
 
-async function addToSpent(userId, categoryToUpdate, amount) {
+async function addToSpent(userId, categoryIdToUpdate, amount) {
     try {
-        const currentSpent = await db.query("select spent from categories where user_id=" + userId + " and name= '" + categoryToUpdate + "'")
+        const currentSpent = await db.query("select spent from categories where user_id=" + userId + " and id=" + categoryIdToUpdate);
         const newSpent = currentSpent.rows[0].spent + amount;
-        await db.query("update categories set spent=" + newSpent + " where user_id=" + userId + " and name= '" + categoryToUpdate + "'")
+        await db.query("update categories set spent=" + newSpent + " where user_id=" + userId + " and id=" + categoryIdToUpdate);
     } catch (error) {
         throw new Error(error);
     }

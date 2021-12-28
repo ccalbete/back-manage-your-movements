@@ -12,7 +12,7 @@ async function getPlaces() {
 
 async function getPlacesByUser(userId) {
     try {
-        const userPlaces = await db.query("select * from places where user_id='" + userId);
+        const userPlaces = await db.query("select * from places where user_id=" + userId);
         return userPlaces.rows;
     } catch (error) {
         throw new Error(error);

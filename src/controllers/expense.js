@@ -34,9 +34,9 @@ async function saveExpense(userId, amount, paymentMode, place, category, date) {
             [userId, amount, payment_mode_id, place_id, category_id, date]);
 
         //if the expense was correctly saved, update available of payment mode
-        await categoryController.addToSpent(userId, category, amount);
-        await paymentModeController.addToSpent(userId, paymentMode, amount);
-        await paymentModeController.subtractToAvailable(userId, paymentMode, amount);
+        await categoryController.addToSpent(userId, category_id, amount);
+        await paymentModeController.addToSpent(userId, payment_mode_id, amount);
+        await paymentModeController.subtractToAvailable(userId, payment_mode_id, amount);
     } catch (error) {
         throw new Error(error)
     }
