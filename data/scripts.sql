@@ -1,5 +1,7 @@
 CREATE DATABASE MANAGE-YOUR-MOVEMENTS
 
+--> setup tables
+
 CREATE TABLE users(
   id SERIAL NOT NULL PRIMARY KEY,
   username VARCHAR(200) NOT NULL UNIQUE,
@@ -9,19 +11,8 @@ CREATE TABLE users(
 INSERT INTO users (username, password) VALUES ('test', '$2b$10$0OLogE.KEIefHFGATP3K6.irldRqcapHg15FNVRD..7X5pjLpw/we');
 INSERT INTO users (username, password) VALUES ('user', '$2b$10$uS.ekKPXgnx6JKpgTr42U.AtVw7eor2PIGEzTxBDQ.523RUy2r63C');
 
-
-CREATE TABLE transfers(
-  id SERIAL NOT NULL PRIMARY KEY,
-  user_id int NOT NULL, 
-  date VARCHAR(200),
-  origin VARCHAR(200),
-  amount VARCHAR(200),
-  destination VARCHAR(200),
-	FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
 CREATE TABLE reasons(
-  id SERIAL NOT NULL,
+  id SERIAL NOT NULL UNIQUE,
   user_id int NOT NULL, 
   name VARCHAR(200) NOT NULL,
 	PRIMARY KEY (id, user_id, name),
@@ -55,7 +46,7 @@ insert into places(user_id, name) values(3, 'Surpermarket');
 
 
 CREATE TABLE payment_modes(
-  id SERIAL NOT NULL,
+  id SERIAL NOT NULL UNIQUE,
   user_id int NOT NULL, 
   name VARCHAR(200) NOT NULL,
 	spent int NOT NULL,
@@ -73,6 +64,33 @@ insert into payment_modes(user_id, name, spent, is_debit) values(1, 'Santander c
 insert into payment_modes(user_id, name, spent, is_debit) values(1, 'Itau credit card', 180, false);
 insert into payment_modes(user_id, name, spent, is_debit) values(1, 'Scotiabank credit card', 0, false);
 insert into payment_modes(user_id, name, spent, is_debit, available) values(2, 'Brou debit card', 85, true, 215);
+
+
+--> history tables
+
+CREATE TABLE transfers(
+  id SERIAL NOT NULL PRIMARY KEY,
+  user_id int NOT NULL, 
+  date VARCHAR(200),
+  origin VARCHAR(200),
+  amount VARCHAR(200),
+  destination VARCHAR(200),
+	FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
+CREATE TABLE incomes(
+  id SERIAL NOT NULL,
+  user_id int NOT NULL,
+  reason_id int NOT NULL,
+  payment_mode_id int NOT NULL,
+  date VARCHAR(200) NOT NULL,
+	amount int NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (reason_id) REFERENCES reasons(id),
+  FOREIGN KEY (payment_mode_id) REFERENCES payment_modes(id)
+);
 
 
 

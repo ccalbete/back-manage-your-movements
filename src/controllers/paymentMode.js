@@ -10,6 +10,15 @@ async function getPaymentModes() {
     }
 }
 
+async function getPaymentModeId(userId, name) {
+    try {
+        const paymentMode = await db.query("select id from payment_modes where name='" + name + "' and user_id=" + userId);
+        return paymentMode.rows[0].id;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 async function getPaymentModesByUser(userId) {
     try {
         const userPaymentModes = await db.query("select * from payment_modes where user_id=" + userId);
@@ -67,7 +76,10 @@ async function addToSpent(userId, paymentModeToUpdate, amount) {
     }
 }
 
+
+
 module.exports.getPaymentModes = getPaymentModes;
+module.exports.getPaymentModeId = getPaymentModeId;
 module.exports.getDebitPaymentModesByUser = getDebitPaymentModesByUser;
 module.exports.getCreditPaymentModesByUser = getCreditPaymentModesByUser;
 module.exports.subtractToAvailable = subtractToAvailable;
