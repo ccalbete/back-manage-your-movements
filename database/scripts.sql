@@ -24,7 +24,7 @@ CREATE TABLE categories(
 
 insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Food', false, 0);
 insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Outings', false, 500);
-insert into categories(user_id, name, spent) values(1, 'Clothes',  500); 
+insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Clothes', false, 500); 
 insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Transportation', false, 150); 
 insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Cleaning', false, 50); 
 insert into categories(user_id, name, is_fixed_expense, spent) values(1, 'Pharmacy', false, 130); 
