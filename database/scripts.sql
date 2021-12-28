@@ -126,10 +126,12 @@ CREATE TABLE transfers(
   id SERIAL NOT NULL PRIMARY KEY,
   user_id int NOT NULL, 
   date VARCHAR(200),
-  origin VARCHAR(200),
-  amount VARCHAR(200),
-  destination VARCHAR(200),
-	FOREIGN KEY (user_id) REFERENCES users(id)
+  origin_payment_mode_id int NOT NULL,
+  amount int NOT NULL,
+  destination_payment_mode_id int NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES users(id),
+	FOREIGN KEY (origin_payment_mode_id) REFERENCES payment_modes(id),
+	FOREIGN KEY (destination_payment_mode_id) REFERENCES payment_modes(id)
 );
 
 

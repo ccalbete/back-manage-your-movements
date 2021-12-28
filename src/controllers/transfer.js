@@ -23,7 +23,10 @@ async function getTransfersByUser(userId) {
 
 async function saveTransfer(userId, date, origin, amount, destination) {
     try {
-        await db.query("insert into transfers(user_id, date, origin, amount, destination) values($1, $2, $3, $4, $5)", [userId, date, origin, amount, destination]);
+        const origin_payment_mode_id = await paymentModeController.getPaymentModeId(userId, origin);
+        const destination_payment_mode_id = await paymentModeController.getPaymentModeId(userId, destination);
+        await db.query("insert into transfers(user_id, date, origin_payment_mode_id, amount, destination_payment_mode_id) values($1, $2, $3, $4, $5)",
+            [userId, date, origin_payment_mode_id, amount, destination_payment_mode_id]);
 
         //if the transfer was correctly saved, update available of payment modes
         await paymentModeController.subtractToAvailable(userId, origin, amount);
