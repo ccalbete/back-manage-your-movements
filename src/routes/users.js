@@ -12,7 +12,7 @@ const verifyToken = require('../middleware/tokenValidation');
 router.get("/", verifyToken, async (req, res, next) => {
     try {
         const users = await userController.getUsers();
-        res.send({ users });
+        res.send({ success: true, users });
     } catch (error) {
         next(error);
     }
