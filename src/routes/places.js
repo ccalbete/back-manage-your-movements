@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 const placeController = require('../controllers/place');
 
 router.get("/", async (req, res, next) => {

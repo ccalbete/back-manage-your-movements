@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 
 //database
-const db = require("../../data");
+const db = require("../../database");
 
 async function getUsers() {
     try {

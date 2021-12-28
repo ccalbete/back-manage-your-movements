@@ -1,10 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
-//database
-const db = require("../../data");
-
-
 const userController = require('../controllers/user');
 const generateToken = require('../controllers/token');
 const verifyToken = require('../middleware/tokenValidation');

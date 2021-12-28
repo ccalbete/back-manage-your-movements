@@ -1,7 +1,7 @@
 const paymentModeController = require("./paymentMode");
 
 //database
-const db = require("../../data");
+const db = require("../../database");
 
 async function getTransfers() {
     try {

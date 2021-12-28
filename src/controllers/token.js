@@ -1,6 +1,6 @@
 
 const jwt = require("jsonwebtoken");
-const secretToken = require('../../data/sign');
+const secretToken = require('../../database/sign');
 
 function generateToken(user) {
     const userId = user.id;

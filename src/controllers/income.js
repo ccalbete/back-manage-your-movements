@@ -2,7 +2,7 @@ const paymentModeController = require("./paymentMode");
 const reasonController = require("./reason");
 
 //database
-const db = require("../../data");
+const db = require("../../database");
 
 async function getIncomes() {
     try {

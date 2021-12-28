@@ -1,12 +1,9 @@
 const categoryController = require("./category");
 const paymentModeController = require("./paymentMode");
 const placeController = require("./place");
-const expenses = require("../../data/expenses");
-
 
 //database
-const db = require("../../data");
-
+const db = require("../../database");
 
 async function getExpenses() {
     try {

@@ -1,5 +1,5 @@
 //database
-const db = require("../../data");
+const db = require("../../database");
 
 async function getReasons() {
     try {
