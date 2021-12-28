@@ -13,10 +13,10 @@ function getExpensesByUser(userId) {
     return userExpenses;
 };
 
-function saveExpense(userId, date, place, category, amount, paymentMode) {
+async function saveExpense(userId, date, place, category, amount, paymentMode) {
     categoryController.addToSpent(userId, category, amount);
     paymentModeController.addToSpent(userId, paymentMode, amount);
-    paymentModeController.subtractToAvailable(userId, paymentMode, amount);
+    await paymentModeController.subtractToAvailable(userId, paymentMode, amount);
 
     expenses.push(
         {

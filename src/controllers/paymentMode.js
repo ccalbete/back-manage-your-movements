@@ -1,42 +1,70 @@
-const paymentModes = require('../../data/paymentModes');
+//database
+const db = require("../../data");
 
-function getPaymentModes() {
-    return paymentModes;
+async function getPaymentModes() {
+    try {
+        const paymentModes = await db.query("select * from payment_modes");
+        return paymentModes.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
-function getDebitPaymentModesByUser(userId) {
-    const userPaymentModes = getPaymentModesByUser(userId);
-    const debitPaymentModes = userPaymentModes.filter(paymentMode => paymentMode.isDebit);
-    return debitPaymentModes;
+async function getPaymentModesByUser(userId) {
+    try {
+        const userPaymentModes = await db.query("select * from payment_modes where user_id=" + userId);
+        return userPaymentModes.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
-function getCreditPaymentModesByUser(userId) {
-    const userPaymentModes = getPaymentModesByUser(userId);
-    const creditPaymentModes = userPaymentModes.filter(paymentMode => !paymentMode.isDebit);
-    return creditPaymentModes;
+async function getDebitPaymentModesByUser(userId) {
+    try {
+        const debitPaymentModes = await db.query("select * from payment_modes where user_id=" + userId + " and is_debit=true");
+        return debitPaymentModes.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
-function getPaymentModesByUser(userId) {
-    const retorno = paymentModes.filter(paymentMode => paymentMode.userId == userId);
-    return retorno;
+async function getCreditPaymentModesByUser(userId) {
+    try {
+        const creditPaymentModes = await db.query("select * from payment_modes where user_id=" + userId + " and is_debit=false");
+        return creditPaymentModes.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
-function subtractToAvailable(userId, paymentModeToUpdate, amount) {
-    const userPaymentModes = getPaymentModesByUser(userId);
-    const paymentMode = userPaymentModes.find(paymentMode => paymentMode.name === paymentModeToUpdate)
-    paymentMode.available -= amount;
+async function subtractToAvailable(userId, paymentModeToUpdate, amount) {
+    try {
+        const currentAvailable = await db.query("select available from payment_modes where user_id=" + userId + " and name= '" + paymentModeToUpdate + "'")
+        const newAvailable = currentAvailable.rows[0].available - amount;
+        await db.query("update payment_modes set available=" + newAvailable + " where user_id=" + userId + " and name= '" + paymentModeToUpdate + "'")
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
-function addToAvailable(userId, paymentModeToUpdate, amount) {
-    const userPaymentModes = getPaymentModesByUser(userId);
-    const paymentMode = userPaymentModes.find(paymentMode => paymentMode.name === paymentModeToUpdate);
-    paymentMode.available += amount;
+async function addToAvailable(userId, paymentModeToUpdate, amount) {
+    try {
+        const currentAvailable = await db.query("select available from payment_modes where user_id=" + userId + " and name= '" + paymentModeToUpdate + "'")
+        const newAvailable = currentAvailable.rows[0].available + amount;
+        await db.query("update payment_modes set available=" + newAvailable + " where user_id=" + userId + " and name= '" + paymentModeToUpdate + "'")
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
-function addToSpent(userId, paymentModeToUpdate, amount) {
-    const userPaymentModes = getPaymentModesByUser(userId);
-    const paymentMode = userPaymentModes.find(paymentMode => paymentMode.name === paymentModeToUpdate);
-    paymentMode.spent += amount;
+async function addToSpent(userId, paymentModeToUpdate, amount) {
+    try {
+        const currentSpent = await db.query("select spent from payment_modes where user_id=" + userId + " and name= '" + paymentModeToUpdate + "'")
+        const newSpent = currentSpent.rows[0].spent + amount;
+        await db.query("update payment_modes set spent=" + newSpent + " where user_id=" + userId + " and name= '" + paymentModeToUpdate + "'")
+    } catch (error) {
+        throw new Error(error);
+    }
 }
 
 module.exports.getPaymentModes = getPaymentModes;

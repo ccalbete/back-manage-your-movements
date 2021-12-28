@@ -1,5 +1,3 @@
-const places = require('../../data/places');
-
 //database
 const db = require("../../data");
 
