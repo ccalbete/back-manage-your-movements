@@ -3,6 +3,15 @@ const bcrypt = require("bcrypt");
 //database
 const db = require("../../data");
 
+async function getUsers() {
+    try {
+        const users = await db.query("select * from users");
+        return users.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 async function userExists(username) {
     try {
         const users = await db.query("select * from users where username= $1", [username]);
@@ -40,6 +49,7 @@ async function createUser(username, encryptedPassword) {
     }
 }
 
+module.exports.getUsers = getUsers;
 module.exports.userExists = userExists;
 module.exports.encryptPassword = encryptPassword;
 module.exports.isValidPassword = isValidPassword;

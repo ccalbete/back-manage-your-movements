@@ -11,15 +11,11 @@ const verifyToken = require('../middleware/tokenValidation');
 
 router.get("/", verifyToken, async (req, res, next) => {
     try {
-        const users = await db.query("select * from users");
-
-        res.send({
-            users: users.rows,
-        });
+        const users = await userController.getUsers();
+        res.send({ users });
     } catch (error) {
         next(error);
     }
-
 });
 
 /*
