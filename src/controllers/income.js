@@ -24,14 +24,10 @@ async function getIncomesByUser(userId) {
 
 async function saveIncome(userId, reason, paymentMode, date, amount) {
     try {
-        const reason_id = await reasonController.getReasonId(userId, reason);
-        const payment_mode_id = await paymentModeController.getPaymentModeId(userId, paymentMode);
+        await paymentModeController.addToAvailable(userId, paymentMode, amount);
 
         await db.query("insert into incomes(user_id, reason_id, payment_mode_id, date, amount) values($1, $2, $3, $4, $5)",
-            [userId, reason_id, payment_mode_id, date, amount]);
-
-        //if the income was correctly saved, update available of payment mode
-        await paymentModeController.addToAvailable(userId, payment_mode_id, amount);
+            [userId, reason, paymentMode, date, amount]);
     } catch (error) {
         throw new Error(error)
     }
