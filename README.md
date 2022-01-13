@@ -5,7 +5,7 @@ This project made in Node.js with Express handles apis for a personal expenses t
 
 Before installing, [download and install Node.js](https://nodejs.org/en/download/).
 
-Depencies installation is done using the
+Dependencies installation is done using the
 [`npm init` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
 
 ```bash
