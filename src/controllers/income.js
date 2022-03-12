@@ -26,8 +26,10 @@ async function saveIncome(userId, reason, paymentMode, date, amount) {
     try {
         await paymentModeController.addToAvailable(userId, paymentMode, amount);
 
-        await db.query("insert into incomes(user_id, reason_id, payment_mode_id, date, amount) values($1, $2, $3, $4, $5)",
-            [userId, reason, paymentMode, date, amount]);
+        const currency = await paymentModeController.getCurrency(paymentMode);
+
+        await db.query("insert into incomes(user_id, reason_id, payment_mode_id, date, currency_id, amount) values($1, $2, $3, $4, $5, $6)",
+            [userId, reason, paymentMode, date, currency, amount]);
     } catch (error) {
         throw new Error(error)
     }

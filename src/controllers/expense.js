@@ -34,8 +34,10 @@ async function saveExpense(userId, amount, paymentMode, place, category, date) {
             await paymentModeController.subtractToAvailable(userId, paymentMode, amount);
         }
 
-        await db.query("insert into expenses(user_id, amount, payment_mode_id, place_id, category_id, date) values($1, $2, $3, $4, $5, $6)",
-            [userId, amount, paymentMode, place, category, date]);
+        const currency = await paymentModeController.getCurrency(paymentMode);
+
+        await db.query("insert into expenses(user_id, amount, payment_mode_id, place_id, category_id, currency_id, date) values($1, $2, $3, $4, $5, $6, $7)",
+            [userId, amount, paymentMode, place, category, currency, date]);
         
     } catch (error) {
         throw new Error(error)

@@ -69,8 +69,17 @@ insert into places(user_id, name) values(1, 'Pharmacy San Roque');
 insert into places(user_id, name) values(1, 'University ORT');
 insert into places(user_id, name) values(1, 'Abitab');
 insert into places(user_id, name) values(2, 'Pharmacy');
-insert into places(user_id, name) values(3, 'Surpermarket');
 
+CREATE TABLE currencies(
+  id SERIAL NOT NULL UNIQUE,
+  user_id int NOT NULL,
+  name VARCHAR(200) NOT NULL,
+  symbol VARCHAR(200) NOT NULL,
+  PRIMARY KEY (user_id, symbol)
+);
+
+insert into currencies(user_id, name, symbol) values(1, 'pesos', '$');
+insert into currencies(user_id, name, symbol) values(1, 'dolares', 'USD');
 
 
 CREATE TABLE payment_modes(
@@ -80,18 +89,20 @@ CREATE TABLE payment_modes(
 	spent int NOT NULL,
 	is_debit boolean NOT NULL,
 	available int,
+  currency_id int NOT NULL,
 	PRIMARY KEY (user_id, name),
-	FOREIGN KEY (user_id) REFERENCES users(id)
+	FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (currency_id) REFERENCES currencies(id)
 );
 
-insert into payment_modes(user_id, name, spent, is_debit, available) values(1, 'Cash', 60, true, 300);
-insert into payment_modes(user_id, name, spent, is_debit, available) values(1, 'Brou debit card', 30, true, 200);
-insert into payment_modes(user_id, name, spent, is_debit, available) values(1, 'Santander debit card', 100, true, 500);
-insert into payment_modes(user_id, name, spent, is_debit, available) values(1, 'Food card', 130, true, 430);
-insert into payment_modes(user_id, name, spent, is_debit) values(1, 'Santander credit card', 350, false);
-insert into payment_modes(user_id, name, spent, is_debit) values(1, 'Itau credit card', 180, false);
-insert into payment_modes(user_id, name, spent, is_debit) values(1, 'Scotiabank credit card', 0, false);
-insert into payment_modes(user_id, name, spent, is_debit, available) values(2, 'Brou debit card', 85, true, 215);
+insert into payment_modes(user_id, name, spent, is_debit, available, currency_id) values(1, 'Cash', 60, true, 300, 1);
+insert into payment_modes(user_id, name, spent, is_debit, available, currency_id) values(1, 'Brou debit card', 30, true, 200, 1);
+insert into payment_modes(user_id, name, spent, is_debit, available, currency_id) values(1, 'Santander debit card', 100, true, 500, 1);
+insert into payment_modes(user_id, name, spent, is_debit, available, currency_id) values(1, 'Food card', 130, true, 430, 1);
+insert into payment_modes(user_id, name, spent, is_debit, currency_id) values(1, 'Santander credit card', 350, false, 1);
+insert into payment_modes(user_id, name, spent, is_debit, currency_id) values(1, 'Itau credit card', 180, false, 1);
+insert into payment_modes(user_id, name, spent, is_debit, currency_id) values(1, 'Scotiabank credit card', 0, false, 1);
+insert into payment_modes(user_id, name, spent, is_debit, available, currency_id) values(2, 'Brou debit card', 85, true, 215, 1);
 
 
 --> history tables
@@ -101,13 +112,15 @@ CREATE TABLE expenses(
   user_id int NOT NULL, 
   amount int NOT NULL,
   payment_mode_id int NOT NULL,
+  currency_id int NOT NULL,
   place_id int,
   category_id int,
   date VARCHAR(200) NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (payment_mode_id) REFERENCES payment_modes(id),
   FOREIGN KEY (place_id) REFERENCES places(id),
-  FOREIGN KEY (category_id) REFERENCES categories(id)
+  FOREIGN KEY (category_id) REFERENCES categories(id),
+  FOREIGN KEY (currency_id) REFERENCES currencies(id)
 );
 
 CREATE TABLE incomes(
@@ -115,11 +128,13 @@ CREATE TABLE incomes(
   user_id int NOT NULL,
   reason_id int NOT NULL,
   payment_mode_id int NOT NULL,
+  currency_id int NOT NULL,
   date VARCHAR(200) NOT NULL,
 	amount int NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (reason_id) REFERENCES reasons(id),
-  FOREIGN KEY (payment_mode_id) REFERENCES payment_modes(id)
+  FOREIGN KEY (payment_mode_id) REFERENCES payment_modes(id),
+  FOREIGN KEY (currency_id) REFERENCES currencies(id)
 );
 
 CREATE TABLE transfers(

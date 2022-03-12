@@ -46,6 +46,17 @@ async function getCreditPaymentModesByUser(userId) {
     }
 }
 
+
+async function getCurrency(paymentModeId) {
+    try {
+        let currency = await db.query("select currency_id from payment_modes where id= $1", [paymentModeId]);
+        return currency.rows[0].currency_id;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+
 async function subtractToAvailable(userId, paymentModeIdToUpdate, amount) {
     try {
         const currentAvailable = await db.query("select available from payment_modes where user_id=" + userId + " and id=" + paymentModeIdToUpdate)
@@ -82,6 +93,7 @@ module.exports.getPaymentModes = getPaymentModes;
 module.exports.getPaymentModeId = getPaymentModeId;
 module.exports.getDebitPaymentModesByUser = getDebitPaymentModesByUser;
 module.exports.getCreditPaymentModesByUser = getCreditPaymentModesByUser;
+module.exports.getCurrency = getCurrency;
 module.exports.subtractToAvailable = subtractToAvailable;
 module.exports.addToAvailable = addToAvailable;
 module.exports.getPaymentModesByUser = getPaymentModesByUser;
