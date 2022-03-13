@@ -29,9 +29,10 @@ router.get("/:userId/fixedExpenses", async (req, res, next) => {
     }
 });
 
-router.get("/:userId/notFixedExpenses", async (req, res, next) => {
+router.get("/:userId/notFixedExpenses/:currencyId", async (req, res, next) => {
     try {
-        const userNotFixedExpensesCategories = await categoryController.getNotFixedExpensesCategoriesByUser(req.params.userId);
+       const { userId, currencyId } = req.params;
+        const userNotFixedExpensesCategories = await categoryController.getNotFixedExpensesCategoriesByUser(userId, currencyId);
         res.send({ success: true, userNotFixedExpensesCategories });
     } catch (error) {
         return next(error);
