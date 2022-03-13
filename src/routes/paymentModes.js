@@ -42,6 +42,17 @@ router.get("/:userId/credit", async (req, res, next) => {
     }
 });
 
+router.get("/:paymentModeId/currency", async (req, res, next) => {
+    try {
+        const paymentModeId = req.params.paymentModeId;
+        const currency = await paymentModeController.getCurrency(paymentModeId);
+        res.send({ success: true, currency });
+    } catch (error) {
+        return next(error);
+    }
+});
+
+
 
 
 module.exports = router;
