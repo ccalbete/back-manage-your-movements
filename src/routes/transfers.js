@@ -23,13 +23,13 @@ router.get("/:userId", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
     try {
         const userId = req.user.userId;
-        const { date, origin, amount, destination } = req.body;
+        const { date, origin, originAmount, destination, destinationAmount } = req.body;
 
-        if (date && origin && amount && destination) {
-            await transferController.saveTransfer(userId, date, origin, amount, destination);
+        if (date && origin && originAmount && destination) {
+            await transferController.saveTransfer(userId, date, origin, originAmount, destination, destinationAmount);
             return res.status(201).send();
         } else {
-            return res.status(400).json({ success: false, message: "Required data is missing (date, origin, amount, destination)" });
+            return res.status(400).json({ success: false, message: "Required data is missing (date, origin, originAmount, destination)" });
         }
     } catch (error) {
         return next(error);

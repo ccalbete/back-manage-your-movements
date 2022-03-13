@@ -21,13 +21,21 @@ async function getTransfersByUser(userId) {
     }
 }
 
-async function saveTransfer(userId, date, origin, amount, destination) {
+async function saveTransfer(userId, date, origin, originAmount, destination, destinationAmount) {
     try {
-        await paymentModeController.subtractToAvailable(userId, origin, amount);
-        await paymentModeController.addToAvailable(userId, destination, amount);
 
-        await db.query("insert into transfers(user_id, date, origin_payment_mode_id, amount, destination_payment_mode_id) values($1, $2, $3, $4, $5)",
-            [userId, date, origin, amount, destination]);
+        const origin_currency = await paymentModeController.getCurrency(origin);
+
+        await db.query("insert into transfers(user_id, date, origin_payment_mode_id, origin_currency_id, origin_amount, destination_payment_mode_id, destination_amount) values($1, $2, $3, $4, $5, $6, $7)",
+            [userId, date, origin, origin_currency, originAmount, destination, destinationAmount ]);
+
+        await paymentModeController.subtractToAvailable(userId, origin, originAmount);
+        if (destinationAmount) { 
+            await paymentModeController.addToAvailable(userId, destination, destinationAmount);
+        } else {
+            await paymentModeController.addToAvailable(userId, destination, originAmount);
+        }
+        
     } catch (error) {
         throw new Error(error)
     }

@@ -103,7 +103,7 @@ insert into payment_modes(user_id, name, spent, is_debit, currency_id) values(1,
 insert into payment_modes(user_id, name, spent, is_debit, currency_id) values(1, 'Itau credit card', 180, false, 1);
 insert into payment_modes(user_id, name, spent, is_debit, currency_id) values(1, 'Scotiabank credit card', 0, false, 1);
 insert into payment_modes(user_id, name, spent, is_debit, available, currency_id) values(2, 'Brou debit card', 85, true, 215, 1);
-
+insert into payment_modes(user_id, name, spent, is_debit, available, currency_id) values(1, 'Santander dolares', 85, true, 215, 2);
 
 --> history tables
 
@@ -142,11 +142,14 @@ CREATE TABLE transfers(
   user_id int NOT NULL, 
   date VARCHAR(200),
   origin_payment_mode_id int NOT NULL,
-  amount int NOT NULL,
+  origin_currency_id int NOT NULL,
+  origin_amount int NOT NULL,
   destination_payment_mode_id int NOT NULL,
+  destination_amount int,
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (origin_payment_mode_id) REFERENCES payment_modes(id),
-	FOREIGN KEY (destination_payment_mode_id) REFERENCES payment_modes(id)
+	FOREIGN KEY (destination_payment_mode_id) REFERENCES payment_modes(id),
+  FOREIGN KEY (origin_currency_id) REFERENCES currencies(id)
 );
 
 
