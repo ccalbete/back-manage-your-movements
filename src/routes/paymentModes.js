@@ -12,6 +12,18 @@ router.get("/", async (req, res, next) => {
 });
 
 
+router.get("/currencies", async (req, res, next) => {
+    try {
+        const currenciesList = await paymentModeController.getCurrencies();
+        res.send({ success: true, currenciesList });
+    } catch (error) {
+        return next(error);
+    }
+});
+
+
+
+
 router.get("/:userId", async (req, res, next) => {
     try {
         const userPaymentModes = await paymentModeController.getPaymentModesByUser(req.params.userId);
@@ -51,6 +63,8 @@ router.get("/:paymentModeId/currency", async (req, res, next) => {
         return next(error);
     }
 });
+
+
 
 
 

@@ -56,6 +56,15 @@ async function getCurrency(paymentModeId) {
     }
 }
 
+async function getCurrencies() {
+    try {
+        let currenciesList = await db.query("select payment_modes.id, currencies.symbol from payment_modes INNER JOIN currencies ON payment_modes.currency_id = currencies.id");
+        return currenciesList.rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 
 async function subtractToAvailable(userId, paymentModeIdToUpdate, amount) {
     try {
@@ -94,6 +103,7 @@ module.exports.getPaymentModeId = getPaymentModeId;
 module.exports.getDebitPaymentModesByUser = getDebitPaymentModesByUser;
 module.exports.getCreditPaymentModesByUser = getCreditPaymentModesByUser;
 module.exports.getCurrency = getCurrency;
+module.exports.getCurrencies = getCurrencies;
 module.exports.subtractToAvailable = subtractToAvailable;
 module.exports.addToAvailable = addToAvailable;
 module.exports.getPaymentModesByUser = getPaymentModesByUser;
