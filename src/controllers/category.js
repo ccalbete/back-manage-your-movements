@@ -50,9 +50,14 @@ async function getFixedExpensesCategoriesByUser(userId) {
 
 async function getNotFixedExpensesCategoriesByUser(userId, currencyId) {
     try {
-        const userCategories = await db.query("select categories.name, sum(expenses.amount) from expenses " +
-            " FULL OUTER JOIN categories ON expenses.category_id = categories.id and categories.is_fixed_expense = false and categories.user_id=" + userId
-            + "and currency_id = " + currencyId + " group by categories.name");
+        const userCategories = await db.query(`
+            SELECT categories.id, categories.name, SUM(expenses.amount) as spent
+            FROM categories
+            INNER JOIN expenses
+            ON categories.id = expenses.category_id
+            WHERE expenses.currency_id = ${currencyId} and categories.user_id = ${userId} and categories.is_fixed_expense = false
+            GROUP BY categories.id, categories.name;    
+        `);
         return userCategories.rows;
     } catch (error) {
         throw new Error(error);
